@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.sistema.Gestion.modelo;
+package com.sistema.Gestion.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,18 +15,18 @@ import lombok.ToString;
  */
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class Customer {
+
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCustomer;
-    private String name;
+    private Integer idUser;
+    private String fullName;
+    private String userName;
     private String telefon;
-    private String address;
     private String email;
-    
     
 }
