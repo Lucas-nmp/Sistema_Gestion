@@ -77,7 +77,7 @@ public class NewUserPage extends javax.swing.JDialog {
         btnExit.setText("Salir");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Teléfonol");
+        jLabel6.setText("Teléfono");
 
         edtPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
