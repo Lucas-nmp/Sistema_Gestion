@@ -39,7 +39,7 @@ public class NewUserPage extends javax.swing.JDialog {
         BtnAddUser = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        edtTelefon = new javax.swing.JTextField();
+        edtPhone = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         edtAdminPass = new javax.swing.JTextField();
 
@@ -79,7 +79,7 @@ public class NewUserPage extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Teléfonol");
 
-        edtTelefon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        edtPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Contraseña de administrador");
@@ -113,7 +113,7 @@ public class NewUserPage extends javax.swing.JDialog {
                             .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(edtTelefon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                .addComponent(edtPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(edtPass, javax.swing.GroupLayout.Alignment.LEADING))
                             .addGap(32, 32, 32)
@@ -146,7 +146,7 @@ public class NewUserPage extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(edtTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(edtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
@@ -170,7 +170,7 @@ public class NewUserPage extends javax.swing.JDialog {
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtFullName;
     private javax.swing.JTextField edtPass;
-    private javax.swing.JTextField edtTelefon;
+    private javax.swing.JTextField edtPhone;
     private javax.swing.JTextField edtUserName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -201,8 +201,8 @@ public class NewUserPage extends javax.swing.JDialog {
         return edtPass.getText();
     }
     
-    public String getTelefon() {
-        return edtTelefon.getText();
+    public String getPhone() {
+        return edtPhone.getText();
     }
     
     public String getEmail() {
@@ -211,6 +211,23 @@ public class NewUserPage extends javax.swing.JDialog {
     
     public String getAdminPass() {
         return edtAdminPass.getText();
+    }
+    
+    public void clean() {
+        edtEmail.setText("");
+        edtFullName.setText("");
+        edtPass.setText("");
+        edtPhone.setText("");
+        edtUserName.setText("");
+    }
+    
+    public void cleanAll() {
+        edtEmail.setText("");
+        edtFullName.setText("");
+        edtPass.setText("");
+        edtPhone.setText("");
+        edtUserName.setText("");
+        edtAdminPass.setText("");
     }
     
 }

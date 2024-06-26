@@ -1,10 +1,13 @@
 package com.sistema.Gestion.controller;
 
+import com.sistema.Gestion.model.User;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
 import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -62,7 +65,8 @@ public class Controller implements ActionListener{
         if (e.getSource() == loginPage.getBtnLogin()) {
             String name = loginPage.getName();
             String pass = loginPage.getPass();
-            JOptionPane.showMessageDialog(loginPage, "Login user");
+            AccessControl(name, pass);
+            
             
         }
         
@@ -70,25 +74,65 @@ public class Controller implements ActionListener{
             newUserPage.setLocationRelativeTo(null);
             newUserPage.setModal(true);
             newUserPage.setVisible(true);
-            
-            //JOptionPane.showMessageDialog(loginPage, "insert new User");
+           
         }
         
         // Eventos NewUserPage
         if (e.getSource() == newUserPage.getBtnExit()) {
             newUserPage.dispose();
+            newUserPage.cleanAll();
         }
         
         if (e.getSource() == newUserPage.getBtnAddUser()) {
-            addUser();
+            String pass = newUserPage.getAdminPass();
+            addUser(pass);
         }
         
         
     }
 
-    private void addUser() {
+    private void addUser(String pass) {
+        
+        User userAdmin = userService.findUserById(1);
+        String AdminPass = userAdmin.getPassword();
+        if (AdminPass.equals(pass)) {
+            String fullName = newUserPage.getFullName();
+            String userName = newUserPage.getUserName();
+            String phone = newUserPage.getPhone();
+            String email = newUserPage.getEmail();
+            String passwd = newUserPage.getPass();
+            
+            if (fullName.isEmpty() || userName.isEmpty() || phone.isEmpty() || passwd.isEmpty() || email.isEmpty()) {
+                JOptionPane.showMessageDialog(newUserPage, "Todos los campos son obligatorios");
+            } else {
+                User newUser = new User(null, passwd, fullName, userName, phone, email);
+                userService.addModifyUser(newUser);
+                JOptionPane.showMessageDialog(newUserPage, "Usuario añadido correctamente");
+                newUserPage.clean();
+            }
+             
+        } else {
+            JOptionPane.showMessageDialog(newUserPage, "Sólo puede añadir usuarios el Administrador");
+        }
+        
         
     }
+
+    private void AccessControl(String name, String pass) {
+        
+        List<User> listUsers = userService.getAllUsers();
+        boolean access = listUsers.stream().anyMatch(u -> u.getUserName().equals(name) && u.getPassword().equals(pass));
+        
+        
+        if (access) {
+            JOptionPane.showMessageDialog(loginPage, "Acceso concedido"); 
+        } else {
+            JOptionPane.showMessageDialog(loginPage, "Acceso denegado"); 
+        }
+        
+    }
+
+    
     
     
 }
