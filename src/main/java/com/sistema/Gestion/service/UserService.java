@@ -7,13 +7,17 @@ package com.sistema.Gestion.service;
 import com.sistema.Gestion.model.User;
 import com.sistema.Gestion.repository.UserRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Lucas
  */
+@Service
 public class UserService implements IUserService{
 
+    @Autowired
     private UserRepository userRepository;
     
     @Override
