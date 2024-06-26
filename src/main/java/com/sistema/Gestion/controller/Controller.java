@@ -2,6 +2,7 @@ package com.sistema.Gestion.controller;
 
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
+import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class Controller implements ActionListener{
     private UserService userService;
     
     private LoginPage loginPage;
+    private NewUserPage newUserPage;
     
     @Autowired
     public void setLoginPage(LoginPage loginPage) {
@@ -31,6 +33,16 @@ public class Controller implements ActionListener{
         this.loginPage.getBtnExit().addActionListener(this);
         this.loginPage.getBtnLogin().addActionListener(this);
         this.loginPage.getBtnNewUser().addActionListener(this);
+        
+        
+    }
+    
+    @Autowired
+    public void setNewUserPage(NewUserPage newUserPage) {
+        this.newUserPage = newUserPage;
+        
+        this.newUserPage.getBtnExit().addActionListener(this);
+        this.newUserPage.getBtnAddUser().addActionListener(this);
     }
     
     
@@ -55,9 +67,26 @@ public class Controller implements ActionListener{
         }
         
         if (e.getSource() == loginPage.getBtnNewUser()) {
-            JOptionPane.showMessageDialog(loginPage, "insert new User");
+            newUserPage.setLocationRelativeTo(null);
+            newUserPage.setModal(true);
+            newUserPage.setVisible(true);
+            
+            //JOptionPane.showMessageDialog(loginPage, "insert new User");
         }
         
+        // Eventos NewUserPage
+        if (e.getSource() == newUserPage.getBtnExit()) {
+            newUserPage.dispose();
+        }
+        
+        if (e.getSource() == newUserPage.getBtnAddUser()) {
+            addUser();
+        }
+        
+        
+    }
+
+    private void addUser() {
         
     }
     
