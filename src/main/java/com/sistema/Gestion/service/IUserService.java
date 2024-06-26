@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface IUserService {
     
-    public List<User> viewUsers();
+    public List<User> getAllUsers();
     
     public User findUserById(Integer idUser);
     

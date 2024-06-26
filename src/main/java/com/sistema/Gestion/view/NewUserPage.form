@@ -52,7 +52,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="edtTelefon" alignment="0" pref="113" max="32767" attributes="0"/>
+                              <Component id="edtPhone" alignment="0" pref="113" max="32767" attributes="0"/>
                               <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="edtPass" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -95,7 +95,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="edtTelefon" min="-2" max="-2" attributes="0"/>
+              <Component id="edtPhone" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -204,7 +204,7 @@
         <Property name="text" type="java.lang.String" value="Tel&#xe9;fonol"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="edtTelefon">
+    <Component class="javax.swing.JTextField" name="edtPhone">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
