@@ -92,6 +92,76 @@ public class ManagementPage extends javax.swing.JDialog {
        edtNameCustomer.setText("");
        edtPhoneCustomer.setText("");
    }
+   
+   // Elementos Supplier Panel
+
+    public JButton getBtnAddSupplier() {
+        return btnAddSupplier;
+    }
+    
+    public JButton getBtnDeleteSupplier() {
+        return btnDeleteSupplier;
+    }
+    
+    public JButton getBtnModifySupplier() {
+        return btnModifySupplier;
+    }
+
+    public String getEdtCifSupplier() {
+        return edtCifSupplier.getText();
+    }
+
+    public void setEdtCifSupplier(String edtCifSupplier) {
+        this.edtCifSupplier.setText(edtCifSupplier);
+    }
+
+    public String getEdtNameSupplier() {
+        return edtNameSupplier.getText();
+    }
+
+    public void setEdtNameSupplier(String name) {
+        this.edtNameSupplier.setText(name);
+    }
+
+    public String getEdtPhoneSupplier() {
+        return edtPhoneSupplier.getText();
+    }
+
+    public void setEdtPhoneSupplier(String phone) {
+        this.edtPhoneSupplier.setText(phone);
+    }
+
+    public String getEdtEmailSupplier() {
+        return edtEmailSupplier.getText();
+    }
+
+    public void setEdtEmailSupplier(String email) {
+        this.edtEmailSupplier.setText(email);
+    }
+    
+    public String getAddresSupplier() {
+        return edtAddressSupplier.getText();
+    }
+    
+    public void setEdtAddressSupplier(String address) {
+        this.edtAddressSupplier.setText(address);
+    }
+
+    public JTable getTableSupplier() {
+        return tableSupplier;
+    }
+    
+    public void cleanSupplier() {
+        edtAddressSupplier.setText("");
+        edtCifSupplier.setText("");
+        edtEmailSupplier.setText("");
+        edtNameSupplier.setText("");
+        edtPhoneSupplier.setText("");
+    }
+
+    
+   
+   
     
   
     
@@ -130,10 +200,30 @@ public class ManagementPage extends javax.swing.JDialog {
         jPanel11 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCustomer = new javax.swing.JTable();
-        supplierPanel = new javax.swing.JPanel();
         productPanel = new javax.swing.JPanel();
         salesPanel = new javax.swing.JPanel();
         userPanel = new javax.swing.JPanel();
+        supplierPanel = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        edtNameSupplier = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtPhone1 = new javax.swing.JLabel();
+        txtEmail1 = new javax.swing.JLabel();
+        btnAddSupplier = new javax.swing.JButton();
+        btnModifySupplier = new javax.swing.JButton();
+        btnDeleteSupplier = new javax.swing.JButton();
+        edtAddressSupplier = new javax.swing.JTextField();
+        edtPhoneSupplier = new javax.swing.JTextField();
+        edtEmailSupplier = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        edtCifSupplier = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableSupplier = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -357,19 +447,6 @@ public class ManagementPage extends javax.swing.JDialog {
 
         jTabbedPanel.addTab("Clientes", customerPanel);
 
-        javax.swing.GroupLayout supplierPanelLayout = new javax.swing.GroupLayout(supplierPanel);
-        supplierPanel.setLayout(supplierPanelLayout);
-        supplierPanelLayout.setHorizontalGroup(
-            supplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1081, Short.MAX_VALUE)
-        );
-        supplierPanelLayout.setVerticalGroup(
-            supplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
-        );
-
-        jTabbedPanel.addTab("Proveedores", supplierPanel);
-
         javax.swing.GroupLayout productPanelLayout = new javax.swing.GroupLayout(productPanel);
         productPanel.setLayout(productPanelLayout);
         productPanelLayout.setHorizontalGroup(
@@ -409,6 +486,181 @@ public class ManagementPage extends javax.swing.JDialog {
 
         jTabbedPanel.addTab("Usuarios", userPanel);
 
+        supplierPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel12.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel7.setBackground(new java.awt.Color(0, 102, 204));
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Nombre");
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Dirección");
+
+        txtPhone1.setBackground(new java.awt.Color(255, 255, 255));
+        txtPhone1.setForeground(new java.awt.Color(255, 255, 255));
+        txtPhone1.setText("Teléfono");
+
+        txtEmail1.setBackground(new java.awt.Color(255, 255, 255));
+        txtEmail1.setForeground(new java.awt.Color(255, 255, 255));
+        txtEmail1.setText("E-Mail");
+
+        btnAddSupplier.setText("Guardar");
+
+        btnModifySupplier.setText("Modificar");
+
+        btnDeleteSupplier.setText("Eliminar");
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("CIF");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModifySupplier)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(txtEmail1)
+                                    .addGap(12, 12, 12)))
+                            .addComponent(txtPhone1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edtNameSupplier)
+                            .addComponent(edtAddressSupplier)
+                            .addComponent(edtEmailSupplier)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(edtPhoneSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(edtCifSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(edtNameSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addGap(48, 48, 48))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(edtAddressSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)))
+                        .addGap(49, 49, 49))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(edtPhoneSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPhone1)
+                        .addComponent(jLabel9)
+                        .addComponent(edtCifSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail1)
+                    .addComponent(edtEmailSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddSupplier)
+                    .addComponent(btnModifySupplier)
+                    .addComponent(btnDeleteSupplier))
+                .addGap(18, 18, 18))
+        );
+
+        jPanel12.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+
+        jPanel5.setBackground(new java.awt.Color(0, 0, 153));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Proveedor");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel12.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        tableSupplier.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tableSupplier);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout supplierPanelLayout = new javax.swing.GroupLayout(supplierPanel);
+        supplierPanel.setLayout(supplierPanelLayout);
+        supplierPanelLayout.setHorizontalGroup(
+            supplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        supplierPanelLayout.setVerticalGroup(
+            supplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(supplierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jTabbedPanel.addTab("Proveedores", supplierPanel);
+
         getContentPane().add(jTabbedPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 154, 1081, 390));
 
         jMenu1.setText("Opciones");
@@ -427,34 +679,54 @@ public class ManagementPage extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCustomer;
+    private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnDeleteCustomer;
+    private javax.swing.JButton btnDeleteSupplier;
     private javax.swing.JButton btnModifyCustomer;
+    private javax.swing.JButton btnModifySupplier;
     private javax.swing.JPanel customerPanel;
     private javax.swing.JTextField edtAddressCustomer;
+    private javax.swing.JTextField edtAddressSupplier;
+    private javax.swing.JTextField edtCifSupplier;
     private javax.swing.JTextField edtEmailCustomer;
+    private javax.swing.JTextField edtEmailSupplier;
     private javax.swing.JTextField edtNameCustomer;
+    private javax.swing.JTextField edtNameSupplier;
     private javax.swing.JTextField edtPhoneCustomer;
+    private javax.swing.JTextField edtPhoneSupplier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JPanel newSalePanel;
     private javax.swing.JPanel productPanel;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JPanel supplierPanel;
     private javax.swing.JTable tableCustomer;
+    private javax.swing.JTable tableSupplier;
     private javax.swing.JLabel txtEmail;
+    private javax.swing.JLabel txtEmail1;
     private javax.swing.JLabel txtPhone;
+    private javax.swing.JLabel txtPhone1;
     private javax.swing.JLabel txtTitulo;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables

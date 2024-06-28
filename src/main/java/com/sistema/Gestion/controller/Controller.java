@@ -1,8 +1,10 @@
 package com.sistema.Gestion.controller;
 
 import com.sistema.Gestion.model.Customer;
+import com.sistema.Gestion.model.Supplier;
 import com.sistema.Gestion.model.User;
 import com.sistema.Gestion.service.CustomerService;
+import com.sistema.Gestion.service.SupplierService;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
 import com.sistema.Gestion.view.ManagementPage;
@@ -38,11 +40,15 @@ public class Controller implements ActionListener{
     @Autowired
     private CustomerService customerService;
     
+    @Autowired
+    private SupplierService supplierService;
+    
     private ManagementPage managementPage;
     private LoginPage loginPage;
     private NewUserPage newUserPage;
     
     private Integer idCustomer;
+    private Integer idSupplier;
     
     
     @Autowired
@@ -66,6 +72,7 @@ public class Controller implements ActionListener{
     public void setManagementPage(ManagementPage managementPage) {
         this.managementPage = managementPage;
         
+        // Acciones Customer
         this.managementPage.getBtnAddCustomer().addActionListener(this);
         this.managementPage.getBtnModifyCustomer().addActionListener(this);
         this.managementPage.getBtnDeleteCustomer().addActionListener(this);
@@ -95,6 +102,39 @@ public class Controller implements ActionListener{
             
         });
         
+        // Acciones Supplier
+        this.managementPage.getBtnAddSupplier().addActionListener(this);
+        this.managementPage.getBtnDeleteSupplier().addActionListener(this);
+        this.managementPage.getBtnModifySupplier().addActionListener(this);
+        
+        this.managementPage.getTableSupplier().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    
+                    
+                    int id = (int) target.getValueAt(row, 0);
+                    String name = (String) target.getValueAt(row, 1);
+                    String phone = (String) target.getValueAt(row, 2);
+                    String address = (String) target.getValueAt(row, 3);
+                    String cif = (String) target.getValueAt(row, 4);
+                    String email = (String) target.getValueAt(row, 5);
+                    
+                    
+                    idSupplier = id;
+                    managementPage.setEdtNameSupplier(name);
+                    managementPage.setEdtPhoneSupplier(phone);
+                    managementPage.setEdtAddressSupplier(address);
+                    managementPage.setEdtCifSupplier(cif);
+                    managementPage.setEdtEmailCustomer(email);
+                }
+            }
+            
+        });
+        
+        
         this.managementPage.getJTabbedPanel().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -103,6 +143,7 @@ public class Controller implements ActionListener{
                 String title = sourceTabbedPane.getTitleAt(index);
                 managementPage.getLavelTitulo().setText(title);
                 fillCustomerTable();
+                fillSupplierTable();
             }
             
         });
@@ -162,6 +203,11 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == managementPage.getBtnDeleteCustomer()) {
             deleteCustomer();
+        }
+        
+        // suppliers
+        if (e.getSource() == managementPage.getBtnAddSupplier()) {
+            addSupplier();
         }
         
         
@@ -233,7 +279,7 @@ public class Controller implements ActionListener{
 
     private void fillCustomerTable() {
         DefaultTableModel model = new DefaultTableModel();
-        String[] cabeceras = {"ID", "Nombre", "Telefono", "Direccion", "E-Mail"};
+        String[] cabeceras = {"ID", "Nombre", "Teléfono", "Dirección", "E-Mail"};
         model.setColumnIdentifiers(cabeceras);
         managementPage.getTableCustomer().setModel(model);
         List<Customer> listCustomer = customerService.getAllCustomers();
@@ -249,9 +295,30 @@ public class Controller implements ActionListener{
                 
             };
             model.addRow(customerLine);
-        });
-        
+        });  
     }
+    
+    private void fillSupplierTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Nombre", "Teléfono", "Dirección", "CIF", "E-Mail"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getTableSupplier().setModel(model);
+        List<Supplier> listSupplier = supplierService.getAllSuppliers();
+        
+        listSupplier.forEach((supplier) ->{
+            
+            Object[] supplierLine = {
+                supplier.getIdSupplier(),
+                supplier.getName(),
+                supplier.getPhone(),
+                supplier.getAddres(),
+                supplier.getCif(),
+                supplier.getEmail()
+            };
+            model.addRow(supplierLine);
+        });  
+    }
+    
 
     private void modifyCustomer() {
         Integer customerId = idCustomer;
@@ -259,20 +326,21 @@ public class Controller implements ActionListener{
         String name = managementPage.getNameCustomer();
         String phone = managementPage.getPhoneCustomer();
         String email = managementPage.getEmailCustomer();
-        if (customerId != null) {
-            Customer customer = new Customer(customerId, name, phone, address, email);
-            customerService.addModifyCustomer(customer);
-            JOptionPane.showMessageDialog(managementPage, "Datos del cliente modificado correctamente");
-            managementPage.cleanCustomer();
-            idCustomer = null;
-            fillCustomerTable();
+        if (address.isEmpty() || name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
         } else {
-            JOptionPane.showMessageDialog(managementPage, "Seleccione un cliente para modificar sus datos");
+            if (customerId != null) {
+                Customer customer = new Customer(customerId, name, phone, address, email);
+                customerService.addModifyCustomer(customer);
+                JOptionPane.showMessageDialog(managementPage, "Datos del cliente modificado correctamente");
+                managementPage.cleanCustomer();
+                idCustomer = null;
+                fillCustomerTable();
+            } else {
+                JOptionPane.showMessageDialog(managementPage, "Seleccione un cliente para modificar sus datos");
+            }       
         }
         
-        
-                
-            
     }
 
     private void deleteCustomer() {
@@ -290,6 +358,24 @@ public class Controller implements ActionListener{
             fillCustomerTable();
         } else {
             JOptionPane.showMessageDialog(managementPage, "Seleccione un cliente para eliminar");
+        }
+    }
+
+    private void addSupplier() {
+        String name = managementPage.getEdtNameSupplier();
+        String addres = managementPage.getAddresSupplier();
+        String phone = managementPage.getEdtPhoneSupplier();
+        String email = managementPage.getEdtEmailSupplier();
+        String cif = managementPage.getEdtCifSupplier();
+        
+        if (name.isEmpty() || addres.isEmpty() || phone.isEmpty() || email.isEmpty() || cif.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            Supplier supplier = new Supplier(null, name, cif, phone, addres, email);
+            supplierService.addModifySupplier(supplier); 
+            JOptionPane.showMessageDialog(managementPage, "Proveedor añadido correctamente");
+            managementPage.cleanSupplier();
+            fillSupplierTable();
         }
     }
 
