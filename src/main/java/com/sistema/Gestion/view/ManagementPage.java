@@ -5,6 +5,10 @@
 package com.sistema.Gestion.view;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,20 +27,73 @@ public class ManagementPage extends javax.swing.JDialog {
         initComponents();
     }
     
-    // Element Customer Panel
-    public JButton getBtnSaveCustomer() {
-        return btnSaveCustomer;
+    public JLabel getLavelTitulo() {
+        return txtTitulo;
     }
     
-    public JButton getModifyCustomer() {
+    public JTabbedPane getJTabbedPanel() {
+        return jTabbedPanel;
+    }
+    
+    // Element Customer Panel
+    public JTable getTableCustomer() {
+        return tableCustomer;
+    }
+    
+    public JButton getBtnAddCustomer() {
+        return btnAddCustomer;
+    }
+    
+    public JButton getBtnModifyCustomer() {
         return btnModifyCustomer;
     }
     
-    public JButton getDeleteCustomer() {
+    public JButton getBtnDeleteCustomer() {
         return btnDeleteCustomer;
     }
     
+    public String getNameCustomer() {
+        return edtNameCustomer.getText();
+    }
     
+    public String getPhoneCustomer() {
+        return edtPhoneCustomer.getText();
+    }
+    
+    public String getAddressCustomer() {
+        return edtAddressCustomer.getText();
+    }
+    
+    public String getEmailCustomer() {
+        return edtEmailCustomer.getText();
+    }
+
+    public void setEdtAddressCustomer(String edtAddressCustomer) {
+        this.edtAddressCustomer.setText(edtAddressCustomer);
+    }
+
+    public void setEdtEmailCustomer(String edtEmailCustomer) {
+        this.edtEmailCustomer.setText(edtEmailCustomer);
+    }
+
+    public void setEdtNameCustomer(String edtNameCustomer) {
+        this.edtNameCustomer.setText(edtNameCustomer);
+    }
+
+    public void setEdtPhoneCustomer(String edtPhoneCustomer) {
+        this.edtPhoneCustomer.setText(edtPhoneCustomer);
+    }
+    
+    
+    
+   public void cleanCustomer() {
+       edtAddressCustomer.setText("");
+       edtEmailCustomer.setText("");
+       edtNameCustomer.setText("");
+       edtPhoneCustomer.setText("");
+   }
+    
+  
     
     
 
@@ -52,7 +109,7 @@ public class ManagementPage extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JLabel();
-        JTabbedPane = new javax.swing.JTabbedPane();
+        jTabbedPanel = new javax.swing.JTabbedPane();
         newSalePanel = new javax.swing.JPanel();
         customerPanel = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -62,17 +119,17 @@ public class ManagementPage extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         edtNameCustomer = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        edtPhoneCustomer = new javax.swing.JLabel();
-        edtEmailCustomer = new javax.swing.JLabel();
-        btnSaveCustomer = new javax.swing.JButton();
+        txtPhone = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JLabel();
+        btnAddCustomer = new javax.swing.JButton();
         btnModifyCustomer = new javax.swing.JButton();
         btnDeleteCustomer = new javax.swing.JButton();
         edtAddressCustomer = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        edtPhoneCustomer = new javax.swing.JTextField();
+        edtEmailCustomer = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableCustomer = new javax.swing.JTable();
         supplierPanel = new javax.swing.JPanel();
         productPanel = new javax.swing.JPanel();
         salesPanel = new javax.swing.JPanel();
@@ -117,8 +174,8 @@ public class ManagementPage extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        JTabbedPane.setBackground(new java.awt.Color(255, 255, 255));
-        JTabbedPane.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTabbedPanel.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPanel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         newSalePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -133,7 +190,7 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
-        JTabbedPane.addTab("Nueva Venta", newSalePanel);
+        jTabbedPanel.addTab("Nueva Venta", newSalePanel);
 
         customerPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -176,15 +233,15 @@ public class ManagementPage extends javax.swing.JDialog {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Dirección");
 
-        edtPhoneCustomer.setBackground(new java.awt.Color(255, 255, 255));
-        edtPhoneCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        edtPhoneCustomer.setText("Teléfono");
+        txtPhone.setBackground(new java.awt.Color(255, 255, 255));
+        txtPhone.setForeground(new java.awt.Color(255, 255, 255));
+        txtPhone.setText("Teléfono");
 
-        edtEmailCustomer.setBackground(new java.awt.Color(255, 255, 255));
-        edtEmailCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        edtEmailCustomer.setText("E-Mail");
+        txtEmail.setBackground(new java.awt.Color(255, 255, 255));
+        txtEmail.setForeground(new java.awt.Color(255, 255, 255));
+        txtEmail.setText("E-Mail");
 
-        btnSaveCustomer.setText("Guardar");
+        btnAddCustomer.setText("Guardar");
 
         btnModifyCustomer.setText("Modificar");
 
@@ -198,7 +255,7 @@ public class ManagementPage extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnSaveCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnModifyCustomer)
                         .addGap(18, 18, 18)
@@ -209,15 +266,15 @@ public class ManagementPage extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(edtEmailCustomer)
+                                    .addComponent(txtEmail)
                                     .addGap(12, 12, 12)))
-                            .addComponent(edtPhoneCustomer))
+                            .addComponent(txtPhone))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(edtNameCustomer)
                             .addComponent(edtAddressCustomer)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4))))
+                            .addComponent(edtPhoneCustomer)
+                            .addComponent(edtEmailCustomer))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -237,15 +294,15 @@ public class ManagementPage extends javax.swing.JDialog {
                                 .addComponent(jLabel4)))
                         .addGap(49, 49, 49))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(edtPhoneCustomer)))
+                        .addComponent(edtPhoneCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPhone)))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtEmailCustomer)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail)
+                    .addComponent(edtEmailCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveCustomer)
+                    .addComponent(btnAddCustomer)
                     .addComponent(btnModifyCustomer)
                     .addComponent(btnDeleteCustomer))
                 .addGap(18, 18, 18))
@@ -253,7 +310,7 @@ public class ManagementPage extends javax.swing.JDialog {
 
         jPanel10.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 330, 270));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -264,7 +321,7 @@ public class ManagementPage extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableCustomer);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -298,7 +355,7 @@ public class ManagementPage extends javax.swing.JDialog {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        JTabbedPane.addTab("Clientes", customerPanel);
+        jTabbedPanel.addTab("Clientes", customerPanel);
 
         javax.swing.GroupLayout supplierPanelLayout = new javax.swing.GroupLayout(supplierPanel);
         supplierPanel.setLayout(supplierPanelLayout);
@@ -311,7 +368,7 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
-        JTabbedPane.addTab("Proveedores", supplierPanel);
+        jTabbedPanel.addTab("Proveedores", supplierPanel);
 
         javax.swing.GroupLayout productPanelLayout = new javax.swing.GroupLayout(productPanel);
         productPanel.setLayout(productPanelLayout);
@@ -324,7 +381,7 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
-        JTabbedPane.addTab("Productos", productPanel);
+        jTabbedPanel.addTab("Productos", productPanel);
 
         javax.swing.GroupLayout salesPanelLayout = new javax.swing.GroupLayout(salesPanel);
         salesPanel.setLayout(salesPanelLayout);
@@ -337,7 +394,7 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
-        JTabbedPane.addTab("Ventas", salesPanel);
+        jTabbedPanel.addTab("Ventas", salesPanel);
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
@@ -350,9 +407,9 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
-        JTabbedPane.addTab("Usuarios", userPanel);
+        jTabbedPanel.addTab("Usuarios", userPanel);
 
-        getContentPane().add(JTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 154, 1081, 390));
+        getContentPane().add(jTabbedPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 154, 1081, 390));
 
         jMenu1.setText("Opciones");
 
@@ -369,15 +426,14 @@ public class ManagementPage extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane JTabbedPane;
+    private javax.swing.JButton btnAddCustomer;
     private javax.swing.JButton btnDeleteCustomer;
     private javax.swing.JButton btnModifyCustomer;
-    private javax.swing.JButton btnSaveCustomer;
     private javax.swing.JPanel customerPanel;
     private javax.swing.JTextField edtAddressCustomer;
-    private javax.swing.JLabel edtEmailCustomer;
+    private javax.swing.JTextField edtEmailCustomer;
     private javax.swing.JTextField edtNameCustomer;
-    private javax.swing.JLabel edtPhoneCustomer;
+    private javax.swing.JTextField edtPhoneCustomer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -391,13 +447,14 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JPanel newSalePanel;
     private javax.swing.JPanel productPanel;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JPanel supplierPanel;
+    private javax.swing.JTable tableCustomer;
+    private javax.swing.JLabel txtEmail;
+    private javax.swing.JLabel txtPhone;
     private javax.swing.JLabel txtTitulo;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
