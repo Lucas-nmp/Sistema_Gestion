@@ -3,10 +3,10 @@ package com.sistema.Gestion.controller;
 import com.sistema.Gestion.model.User;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
+import com.sistema.Gestion.view.ManagementPage;
 import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,10 @@ public class Controller implements ActionListener{
     @Autowired
     private UserService userService;
     
+    private ManagementPage managementPage;
     private LoginPage loginPage;
     private NewUserPage newUserPage;
+    
     
     @Autowired
     public void setLoginPage(LoginPage loginPage) {
@@ -35,9 +37,7 @@ public class Controller implements ActionListener{
         
         this.loginPage.getBtnExit().addActionListener(this);
         this.loginPage.getBtnLogin().addActionListener(this);
-        this.loginPage.getBtnNewUser().addActionListener(this);
-        
-        
+        this.loginPage.getBtnNewUser().addActionListener(this);   
     }
     
     @Autowired
@@ -46,6 +46,13 @@ public class Controller implements ActionListener{
         
         this.newUserPage.getBtnExit().addActionListener(this);
         this.newUserPage.getBtnAddUser().addActionListener(this);
+    }
+    
+    @Autowired
+    public void setManagementPage(ManagementPage managementPage) {
+        this.managementPage = managementPage;
+        
+        
     }
     
     
@@ -125,7 +132,10 @@ public class Controller implements ActionListener{
         
         
         if (access) {
-            JOptionPane.showMessageDialog(loginPage, "Acceso concedido"); 
+            managementPage.setModal(true);
+            managementPage.setLocationRelativeTo(null);
+            managementPage.setVisible(true);
+            
         } else {
             JOptionPane.showMessageDialog(loginPage, "Acceso denegado"); 
         }
