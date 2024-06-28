@@ -262,6 +262,7 @@ public class Controller implements ActionListener{
         if (customerId != null) {
             Customer customer = new Customer(customerId, name, phone, address, email);
             customerService.addModifyCustomer(customer);
+            JOptionPane.showMessageDialog(managementPage, "Datos del cliente modificado correctamente");
             managementPage.cleanCustomer();
             idCustomer = null;
             fillCustomerTable();
@@ -275,7 +276,21 @@ public class Controller implements ActionListener{
     }
 
     private void deleteCustomer() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Integer customerId = idCustomer;
+        String address = managementPage.getAddressCustomer();
+        String name = managementPage.getNameCustomer();
+        String phone = managementPage.getPhoneCustomer();
+        String email = managementPage.getEmailCustomer();
+        if (customerId != null) {
+            Customer customer = new Customer(customerId, name, phone, address, email);
+            customerService.deleteCustomer(customer);
+            JOptionPane.showMessageDialog(managementPage, "Cliente eliminado correctamente");
+            managementPage.cleanCustomer();
+            idCustomer = null;
+            fillCustomerTable();
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Seleccione un cliente para eliminar");
+        }
     }
 
     
