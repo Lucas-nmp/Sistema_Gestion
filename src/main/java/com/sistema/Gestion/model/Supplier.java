@@ -27,10 +27,10 @@ public class Supplier {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSupplier;
+    private Integer idSupplier;
     private String name;
     private String cif;
-    private String telefon;
+    private String phone;
     private String addres;
     private String email;
     
