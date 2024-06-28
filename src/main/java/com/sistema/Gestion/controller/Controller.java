@@ -1,14 +1,23 @@
 package com.sistema.Gestion.controller;
 
+import com.sistema.Gestion.model.Customer;
 import com.sistema.Gestion.model.User;
+import com.sistema.Gestion.service.CustomerService;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
 import com.sistema.Gestion.view.ManagementPage;
 import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -26,9 +35,14 @@ public class Controller implements ActionListener{
     @Autowired
     private UserService userService;
     
+    @Autowired
+    private CustomerService customerService;
+    
     private ManagementPage managementPage;
     private LoginPage loginPage;
     private NewUserPage newUserPage;
+    
+    private Integer idCustomer;
     
     
     @Autowired
@@ -51,6 +65,47 @@ public class Controller implements ActionListener{
     @Autowired
     public void setManagementPage(ManagementPage managementPage) {
         this.managementPage = managementPage;
+        
+        this.managementPage.getBtnAddCustomer().addActionListener(this);
+        this.managementPage.getBtnModifyCustomer().addActionListener(this);
+        this.managementPage.getBtnDeleteCustomer().addActionListener(this);
+        
+        this.managementPage.getTableCustomer().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    
+                    
+                    int id = (int) target.getValueAt(row, 0);
+                    String name = (String) target.getValueAt(row, 1);
+                    String phone = (String) target.getValueAt(row, 2);
+                    String address = (String) target.getValueAt(row, 3);
+                    String email = (String) target.getValueAt(row, 4);
+                    
+                    
+                    idCustomer = id;
+                    managementPage.setEdtNameCustomer(name);
+                    managementPage.setEdtPhoneCustomer(phone);
+                    managementPage.setEdtAddressCustomer(address);
+                    managementPage.setEdtEmailCustomer(email);
+                }
+            }
+            
+        });
+        
+        this.managementPage.getJTabbedPanel().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+                int index = sourceTabbedPane.getSelectedIndex();
+                String title = sourceTabbedPane.getTitleAt(index);
+                managementPage.getLavelTitulo().setText(title);
+                fillCustomerTable();
+            }
+            
+        });
         
         
     }
@@ -95,6 +150,20 @@ public class Controller implements ActionListener{
             addUser(pass);
         }
         
+        // Eventos ManagementPage
+        // clientes
+        if (e.getSource() == managementPage.getBtnAddCustomer()) {
+            addCustomer();
+        }
+        
+        if (e.getSource() == managementPage.getBtnModifyCustomer()) {
+            modifyCustomer();
+        }
+        
+        if (e.getSource() == managementPage.getBtnDeleteCustomer()) {
+            deleteCustomer();
+        }
+        
         
     }
 
@@ -134,6 +203,7 @@ public class Controller implements ActionListener{
         if (access) {
             managementPage.setModal(true);
             managementPage.setLocationRelativeTo(null);
+            managementPage.getJTabbedPanel().setSelectedIndex(4);
             managementPage.setVisible(true);
             
         } else {
@@ -141,6 +211,74 @@ public class Controller implements ActionListener{
         }
         
     }
+
+    private void addCustomer() {
+        String name = managementPage.getNameCustomer();
+        String addres = managementPage.getAddressCustomer();
+        String phone = managementPage.getPhoneCustomer();
+        String email = managementPage.getEmailCustomer();
+        
+        if (name.isEmpty() || addres.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            Customer customer = new Customer(null, name, phone, addres, email);
+            customerService.addModifyCustomer(customer); 
+            JOptionPane.showMessageDialog(managementPage, "Cliente añadido correctamente");
+            managementPage.cleanCustomer();
+            fillCustomerTable();
+        }
+            
+        
+    }
+
+    private void fillCustomerTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Nombre", "Telefono", "Direccion", "E-Mail"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getTableCustomer().setModel(model);
+        List<Customer> listCustomer = customerService.getAllCustomers();
+        
+        listCustomer.forEach((customer) ->{
+            
+            Object[] customerLine = {
+                customer.getIdCustomer(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getAddress(),
+                customer.getEmail()
+                
+            };
+            model.addRow(customerLine);
+        });
+        
+    }
+
+    private void modifyCustomer() {
+        Integer customerId = idCustomer;
+        String address = managementPage.getAddressCustomer();
+        String name = managementPage.getNameCustomer();
+        String phone = managementPage.getPhoneCustomer();
+        String email = managementPage.getEmailCustomer();
+        if (customerId != null) {
+            Customer customer = new Customer(customerId, name, phone, address, email);
+            customerService.addModifyCustomer(customer);
+            managementPage.cleanCustomer();
+            idCustomer = null;
+            fillCustomerTable();
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Seleccione un cliente para modificar sus datos");
+        }
+        
+        
+                
+            
+    }
+
+    private void deleteCustomer() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 
     
     
