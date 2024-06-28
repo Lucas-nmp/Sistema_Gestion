@@ -128,7 +128,7 @@ public class Controller implements ActionListener{
                     managementPage.setEdtPhoneSupplier(phone);
                     managementPage.setEdtAddressSupplier(address);
                     managementPage.setEdtCifSupplier(cif);
-                    managementPage.setEdtEmailCustomer(email);
+                    managementPage.setEdtEmailSupplier(email);
                 }
             }
             
@@ -208,6 +208,14 @@ public class Controller implements ActionListener{
         // suppliers
         if (e.getSource() == managementPage.getBtnAddSupplier()) {
             addSupplier();
+        }
+        
+        if(e.getSource() == managementPage.getBtnDeleteSupplier()) {
+            deleteSupplier();
+        }
+        
+        if (e.getSource() == managementPage.getBtnModifySupplier()) {
+            modifySupplier();
         }
         
         
@@ -361,21 +369,69 @@ public class Controller implements ActionListener{
         }
     }
 
+    // hay que comprobar que no se añaden dos proveedores o clientes con el mismos dni, telefono, cif para evitar duplicados en una base de datos grande
     private void addSupplier() {
         String name = managementPage.getEdtNameSupplier();
-        String addres = managementPage.getAddresSupplier();
+        String address = managementPage.getAddresSupplier();
         String phone = managementPage.getEdtPhoneSupplier();
         String email = managementPage.getEdtEmailSupplier();
         String cif = managementPage.getEdtCifSupplier();
         
-        if (name.isEmpty() || addres.isEmpty() || phone.isEmpty() || email.isEmpty() || cif.isEmpty()) {
+        if (name.isEmpty() || address.isEmpty() || phone.isEmpty() || email.isEmpty() || cif.isEmpty()) {
             JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
         } else {
-            Supplier supplier = new Supplier(null, name, cif, phone, addres, email);
+            System.out.println("Name: " + name);
+            System.out.println("Address: " + address);
+            System.out.println("Phone: " + phone);
+            System.out.println("Email: " + email);
+            System.out.println("CIF: " + cif);
+            Supplier supplier = new Supplier(null, name, cif, phone, address, email);
             supplierService.addModifySupplier(supplier); 
             JOptionPane.showMessageDialog(managementPage, "Proveedor añadido correctamente");
             managementPage.cleanSupplier();
             fillSupplierTable();
+        }
+    }
+
+    private void deleteSupplier() {
+        Integer supplierId = idSupplier;
+        String address = managementPage.getAddresSupplier();
+        String name = managementPage.getEdtNameSupplier();
+        String phone = managementPage.getEdtPhoneSupplier();
+        String email = managementPage.getEdtEmailSupplier();
+        String cif = managementPage.getEdtCifSupplier();
+        if (supplierId != null) {
+            Supplier supplier = new Supplier(supplierId, name, cif, phone, address, email);
+            supplierService.deleteSupplier(supplier);
+            JOptionPane.showMessageDialog(managementPage, "Proveedor eliminado correctamente");
+            managementPage.cleanSupplier();
+            idSupplier = null;
+            fillSupplierTable();
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Seleccione un proveedor para eliminar");
+        }
+    }
+
+    private void modifySupplier() {
+        Integer supplierId = idSupplier;
+        String address = managementPage.getAddresSupplier();
+        String name = managementPage.getEdtNameSupplier();
+        String phone = managementPage.getEdtPhoneSupplier();
+        String email = managementPage.getEdtEmailSupplier();
+        String cif = managementPage.getEdtCifSupplier();
+        if (address.isEmpty() || name.isEmpty() || phone.isEmpty() || email.isEmpty() || cif.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            if (supplierId != null) {
+                Supplier supplier = new Supplier(supplierId, name, cif, phone, address, email);
+                supplierService.addModifySupplier(supplier);
+                JOptionPane.showMessageDialog(managementPage, "Proveedor modificado correctamente");
+                managementPage.cleanSupplier();
+                idSupplier = null;
+                fillSupplierTable();
+            } else {
+                JOptionPane.showMessageDialog(managementPage, "Seleccione un proveedor para modificar sus datos");
+            }       
         }
     }
 
