@@ -43,6 +43,10 @@ public class Controller implements ActionListener{
     @Autowired
     private SupplierService supplierService;
     
+    @Autowired
+    
+    
+
     private ManagementPage managementPage;
     private LoginPage loginPage;
     private NewUserPage newUserPage;
