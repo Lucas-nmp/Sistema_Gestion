@@ -1,9 +1,11 @@
 package com.sistema.Gestion.controller;
 
 import com.sistema.Gestion.model.Customer;
+import com.sistema.Gestion.model.Product;
 import com.sistema.Gestion.model.Supplier;
 import com.sistema.Gestion.model.User;
 import com.sistema.Gestion.service.CustomerService;
+import com.sistema.Gestion.service.ProductService;
 import com.sistema.Gestion.service.SupplierService;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
@@ -44,7 +46,7 @@ public class Controller implements ActionListener{
     private SupplierService supplierService;
     
     @Autowired
-    
+    private ProductService productService;
     
 
     private ManagementPage managementPage;
@@ -53,6 +55,7 @@ public class Controller implements ActionListener{
     
     private Integer idCustomer;
     private Integer idSupplier;
+    private Integer idProduct;
     
     
     @Autowired
@@ -148,9 +151,43 @@ public class Controller implements ActionListener{
                 managementPage.getLavelTitulo().setText(title);
                 fillCustomerTable();
                 fillSupplierTable();
+                fillPruductTable();
             }
             
         });
+        
+        
+        // Acciones Product
+        this.managementPage.getBtnAddProduct().addActionListener(this);
+        this.managementPage.getBtnDeleteProduct().addActionListener(this);
+        this.managementPage.getBtnModifyProduct().addActionListener(this);
+        
+        this.managementPage.getTableProduct().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    
+                    
+                    int id = (int) target.getValueAt(row, 0);
+                    String description = (String) target.getValueAt(row, 1);
+                    Double price = (Double) target.getValueAt(row, 2);
+                    String familyProduct = (String) target.getValueAt(row, 3);
+                    Integer stock = (Integer) target.getValueAt(row, 4);
+                    
+                    
+                    idProduct = id;
+                    managementPage.setEdtNameProduct(description);
+                    managementPage.setEdtPriceProduct(price.toString());
+                    managementPage.setEdtStckProduct(stock.toString());
+                    managementPage.setCmbFamilyProduct(familyProduct);
+                    
+                }
+            }
+            
+        });
+        
         
         
     }
@@ -222,6 +259,19 @@ public class Controller implements ActionListener{
             modifySupplier();
         }
         
+        // productos
+        if (e.getSource() == managementPage.getBtnAddProduct()) {
+            addProduct();
+        }
+        
+        if (e.getSource() == managementPage.getBtnModifyProduct()) {
+            modifyProduct();
+        }
+        
+        if (e.getSource() == managementPage.getBtnDeleteProduct()) {
+            deleteProduct();
+        }
+         
         
     }
 
@@ -331,6 +381,25 @@ public class Controller implements ActionListener{
         });  
     }
     
+    private void fillPruductTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Descripción", "Precio", "Sección", "Stock"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getTableProduct().setModel(model);
+        List<Product> listProduct = productService.getAllProducts();
+        
+        listProduct.forEach((product) -> {
+            Object[] productLine = {
+                product.getIdProduct(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getFamily(),
+                product.getStock()
+            };
+            model.addRow(productLine);
+        });
+    }
+    
 
     private void modifyCustomer() {
         Integer customerId = idCustomer;
@@ -384,11 +453,6 @@ public class Controller implements ActionListener{
         if (name.isEmpty() || address.isEmpty() || phone.isEmpty() || email.isEmpty() || cif.isEmpty()) {
             JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
         } else {
-            System.out.println("Name: " + name);
-            System.out.println("Address: " + address);
-            System.out.println("Phone: " + phone);
-            System.out.println("Email: " + email);
-            System.out.println("CIF: " + cif);
             Supplier supplier = new Supplier(null, name, cif, phone, address, email);
             supplierService.addModifySupplier(supplier); 
             JOptionPane.showMessageDialog(managementPage, "Proveedor añadido correctamente");
@@ -437,6 +501,81 @@ public class Controller implements ActionListener{
                 JOptionPane.showMessageDialog(managementPage, "Seleccione un proveedor para modificar sus datos");
             }       
         }
+    }
+
+    private void addProduct() {
+        String description = managementPage.getEdtNameProduct();
+        String seccion = managementPage.getCmbFamilyProduct();
+        String price = managementPage.getEdtPriceProduct();
+        String stock = managementPage.getEdtStckProduct();
+        
+        if (description.isEmpty() || seccion.equals("Seleccione sección") || price.isEmpty() || stock.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            try {
+                Double priceDouble = Double.valueOf(price);
+                Integer stockInt = Integer.valueOf(stock);
+                Product product = new Product(null, description, priceDouble, seccion, stockInt);
+                productService.addModifyProduct(product);
+                JOptionPane.showMessageDialog(managementPage, "Producto añadido correctamente");
+                managementPage.cleanProduct();
+                fillPruductTable();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "Los campos stock y precio tienen que ser números");
+            }
+        }
+    }
+
+    private void modifyProduct() {
+        Integer id = idProduct;
+        String description = managementPage.getEdtNameProduct();
+        String seccion = managementPage.getCmbFamilyProduct();
+        String price = managementPage.getEdtPriceProduct();
+        String stock = managementPage.getEdtStckProduct();
+        
+        if (description.isEmpty() || seccion.equals("Seleccione sección") || price.isEmpty() || stock.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            try {
+                Double priceDouble = Double.valueOf(price);
+                Integer stockInt = Integer.valueOf(stock);
+                Product product = new Product(id, description, priceDouble, seccion, stockInt);
+                productService.addModifyProduct(product);
+                JOptionPane.showMessageDialog(managementPage, "Producto modificado correctamente");
+                idProduct = null;
+                managementPage.cleanProduct();
+                fillPruductTable();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "Los campos stock y precio tienen que ser números");
+            }
+        }
+        
+    }
+
+    private void deleteProduct() {
+        Integer id = idProduct;
+        String description = managementPage.getEdtNameProduct();
+        String seccion = managementPage.getCmbFamilyProduct();
+        String price = managementPage.getEdtPriceProduct();
+        String stock = managementPage.getEdtStckProduct();
+        
+        if (description.isEmpty() || seccion.equals("Seleccione sección") || price.isEmpty() || stock.isEmpty() || id == null) {
+            JOptionPane.showMessageDialog(managementPage, "Todos los campos son obligatorios");
+        } else {
+            try {
+                Double priceDouble = Double.valueOf(price);
+                Integer stockInt = Integer.valueOf(stock);
+                Product product = new Product(id, description, priceDouble, seccion, stockInt);
+                productService.deleteProduct(product);
+                JOptionPane.showMessageDialog(managementPage, "Producto eliminado correctamente");
+                idProduct = null;
+                managementPage.cleanProduct();
+                fillPruductTable();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "Los campos stock y precio tienen que ser números");
+            }
+        }
+        
     }
 
     
