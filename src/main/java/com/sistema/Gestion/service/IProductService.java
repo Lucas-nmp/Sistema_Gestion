@@ -11,7 +11,7 @@ public interface IProductService {
     
     public List<Product> getAllProducts();
     
-    public Product getProductForId();
+    public Product getProductForId(Integer idProduct);
     
     public void addModifyProduct(Product product);
     

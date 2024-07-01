@@ -5,6 +5,7 @@
 package com.sistema.Gestion.view;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -159,62 +160,67 @@ public class ManagementPage extends javax.swing.JDialog {
         edtPhoneSupplier.setText("");
     }
     
-    // Elementos User Panel
+    
+    //Product Panel
 
-    public JButton getBtnAddUser() {
-        return btnAddUser;
+    public JButton getBtnAddProduct() {
+        return btnAddProduct;
     }
 
-    public JButton getBtnDeleteUser() {
-        return btnDeleteUser;
+    public JButton getBtnDeleteProduct() {
+        return btnDeleteProduct;
     }
 
-    public JButton getBtnModifyUser() {
-        return btnModifyUser;
+    public JButton getBtnModifyProduct() {
+        return btnModifyProduct;
     }
 
-    public String getEdtEmailUser() {
-        return edtEmailUser.getText();
+    public String getCmbFamilyProduct() {
+        return (String) cmbFamilyProduct.getSelectedItem();
     }
 
-    public void setEdtEmailUser(String edtEmailUser) {
-        this.edtEmailUser.setText(edtEmailUser);
+    public void setCmbFamilyProduct(String familyProduct) {
+        for (int i = 0; i < cmbFamilyProduct.getItemCount(); i++) {
+            if (cmbFamilyProduct.getItemAt(i).equals(familyProduct)) {
+                cmbFamilyProduct.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
-    public String getEdtNameUser() {
-        return edtNameUser.getText();
+    public String getEdtNameProduct() {
+        return edtNameProduct.getText();
     }
 
-    public void setEdtNameUser(String edtNameUser) {
-        this.edtNameUser.setText(edtNameUser);
+    public void setEdtNameProduct(String edtNameProduct) {
+        this.edtNameProduct.setText(edtNameProduct);
     }
 
-    public String getEdtNickUser() {
-        return edtNickUser.getText();
+    public String getEdtPriceProduct() {
+        return edtPriceProduct.getText();
     }
 
-    public void setEdtNickUser(String edtNickUser) {
-        this.edtNickUser.setText(edtNickUser);
+    public void setEdtPriceProduct(String edtPriceProduct) {
+        this.edtPriceProduct.setText(edtPriceProduct);
     }
 
-    public String getEdtPassUser() {
-        return edtPassUser.getText();
+    public String getEdtStckProduct() {
+        return edtStckProduct.getText();
     }
 
-    public void setEdtPassUser(String edtPassUser) {
-        this.edtPassUser.setText(edtPassUser);
+    public void setEdtStckProduct(String edtStckProduct) {
+        this.edtStckProduct.setText(edtStckProduct);
+    }
+
+    public JTable getTableProduct() {
+        return tableProduct;
     }
     
-    public JTable getUserTable() {
-        return tableUser;
-    }
-    
-    public void cleanUser() {
-        edtEmailUser.setText("");
-        edtNameUser.setText("");
-        edtPassUser.setText("");
-        edtNickUser.setText("");
-        edtPhoneUser.setText("");
+    public void cleanProduct() {
+        edtNameProduct.setText("");
+        edtPriceProduct.setText("");
+        edtStckProduct.setText("");
+        cmbFamilyProduct.setSelectedIndex(0);
     }
     
     
@@ -294,26 +300,6 @@ public class ManagementPage extends javax.swing.JDialog {
         edtEmailCustomer1 = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableVentas = new javax.swing.JTable();
-        userPanel = new javax.swing.JPanel();
-        jPanel16 = new javax.swing.JPanel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jPanel18 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        edtNameUser = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        txtPhone4 = new javax.swing.JLabel();
-        txtEmail4 = new javax.swing.JLabel();
-        btnAddUser = new javax.swing.JButton();
-        btnModifyUser = new javax.swing.JButton();
-        btnDeleteUser = new javax.swing.JButton();
-        edtNickUser = new javax.swing.JTextField();
-        edtPhoneUser = new javax.swing.JTextField();
-        edtEmailUser = new javax.swing.JTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tableUser = new javax.swing.JTable();
-        jLabel18 = new javax.swing.JLabel();
-        edtPassUser = new javax.swing.JTextField();
         supplierPanel = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -613,7 +599,7 @@ public class ManagementPage extends javax.swing.JDialog {
 
         btnDeleteProduct.setText("Eliminar");
 
-        cmbFamilyProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Familia", "Motor", "Chasis", "Interiores" }));
+        cmbFamilyProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione sección", "Motor", "Chasis", "Interiores" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -858,176 +844,6 @@ public class ManagementPage extends javax.swing.JDialog {
 
         jTabbedPanel.addTab("Ventas", salesPanel);
 
-        jPanel16.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel17.setBackground(new java.awt.Color(0, 0, 153));
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Usuarios");
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        jPanel16.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, -1));
-
-        jPanel18.setBackground(new java.awt.Color(0, 102, 204));
-
-        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Nombre");
-
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Nick");
-
-        txtPhone4.setBackground(new java.awt.Color(255, 255, 255));
-        txtPhone4.setForeground(new java.awt.Color(255, 255, 255));
-        txtPhone4.setText("Teléfono");
-
-        txtEmail4.setBackground(new java.awt.Color(255, 255, 255));
-        txtEmail4.setForeground(new java.awt.Color(255, 255, 255));
-        txtEmail4.setText("E-Mail");
-
-        btnAddUser.setText("Guardar");
-
-        btnModifyUser.setText("Modificar");
-
-        btnDeleteUser.setText("Eliminar");
-
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModifyUser)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel17)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPhone4)
-                            .addComponent(txtEmail4)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtNameUser)
-                            .addComponent(edtNickUser)
-                            .addComponent(edtEmailUser, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addComponent(edtPhoneUser, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 160, Short.MAX_VALUE)))))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(edtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel16))
-                                .addGap(48, 48, 48))
-                            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(edtNickUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel17)))
-                        .addGap(49, 49, 49))
-                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edtPhoneUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPhone4)))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail4)
-                    .addComponent(edtEmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddUser)
-                    .addComponent(btnModifyUser)
-                    .addComponent(btnDeleteUser))
-                .addGap(18, 18, 18))
-        );
-
-        jPanel16.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 330, 270));
-
-        tableUser.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(tableUser);
-
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Contraseña");
-
-        javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
-        userPanel.setLayout(userPanelLayout);
-        userPanelLayout.setHorizontalGroup(
-            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
-                .addGap(191, 191, 191)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtPassUser, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
-            .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(userPanelLayout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(733, Short.MAX_VALUE)))
-        );
-        userPanelLayout.setVerticalGroup(
-            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(edtPassUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(142, 142, 142))
-            .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(userPanelLayout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(16, Short.MAX_VALUE)))
-        );
-
-        jTabbedPanel.addTab("Usuarios", userPanel);
-
         supplierPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel12.setBackground(new java.awt.Color(204, 204, 204));
@@ -1223,15 +1039,12 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JButton btnAddCustomer;
     private javax.swing.JButton btnAddProduct;
     private javax.swing.JButton btnAddSupplier;
-    private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnDeleteCustomer;
     private javax.swing.JButton btnDeleteProduct;
     private javax.swing.JButton btnDeleteSupplier;
-    private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnModifyCustomer;
     private javax.swing.JButton btnModifyProduct;
     private javax.swing.JButton btnModifySupplier;
-    private javax.swing.JButton btnModifyUser;
     private javax.swing.JButton btnSearchSales;
     private javax.swing.JComboBox<String> cmbFamilyProduct;
     private javax.swing.JPanel customerPanel;
@@ -1242,18 +1055,13 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JTextField edtEmailCustomer;
     private javax.swing.JTextField edtEmailCustomer1;
     private javax.swing.JTextField edtEmailSupplier;
-    private javax.swing.JTextField edtEmailUser;
     private javax.swing.JTextField edtNameCustomer;
     private javax.swing.JTextField edtNameCustomer1;
     private javax.swing.JTextField edtNameProduct;
     private javax.swing.JTextField edtNameSupplier;
-    private javax.swing.JTextField edtNameUser;
-    private javax.swing.JTextField edtNickUser;
-    private javax.swing.JTextField edtPassUser;
     private javax.swing.JTextField edtPhoneCustomer;
     private javax.swing.JTextField edtPhoneCustomer1;
     private javax.swing.JTextField edtPhoneSupplier;
-    private javax.swing.JTextField edtPhoneUser;
     private javax.swing.JTextField edtPriceProduct;
     private javax.swing.JTextField edtStckProduct;
     private javax.swing.JLabel jLabel1;
@@ -1262,10 +1070,6 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1284,9 +1088,6 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1298,7 +1099,6 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JPanel newSalePanel;
@@ -1308,19 +1108,15 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JTable tableCustomer;
     private javax.swing.JTable tableProduct;
     private javax.swing.JTable tableSupplier;
-    private javax.swing.JTable tableUser;
     private javax.swing.JTable tableVentas;
     private javax.swing.JLabel txtEmail;
     private javax.swing.JLabel txtEmail1;
     private javax.swing.JLabel txtEmail2;
     private javax.swing.JLabel txtEmail3;
-    private javax.swing.JLabel txtEmail4;
     private javax.swing.JLabel txtPhone;
     private javax.swing.JLabel txtPhone1;
     private javax.swing.JLabel txtPhone2;
     private javax.swing.JLabel txtPhone3;
-    private javax.swing.JLabel txtPhone4;
     private javax.swing.JLabel txtTitulo;
-    private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 }
