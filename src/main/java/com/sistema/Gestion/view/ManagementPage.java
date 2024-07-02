@@ -242,6 +242,20 @@ public class ManagementPage extends javax.swing.JDialog {
         return tableBills;
     }
 
+    public String getIdCustomer() {
+        return idCustomer.getText();
+    }
+
+    public void setIdCustomer(String idCustomer) {
+        this.idCustomer.setText(idCustomer);
+    }
+
+    public String getIdBill() {
+        return idBill.getText();
+    }
+    
+    
+
     
     
     
@@ -774,7 +788,7 @@ public class ManagementPage extends javax.swing.JDialog {
         txtEmail3.setForeground(new java.awt.Color(255, 255, 255));
         txtEmail3.setText("Fecha hasta");
 
-        searchAllBills.setText("Ver todas");
+        searchAllBills.setText("Buscar");
 
         monthFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12" }));
 

@@ -43,6 +43,13 @@ public class BillService implements IBillService{
         billRepository.delete(bill);
     }
     
+    public List<Bill> findBillsByCustomerAndDateRange(Integer idCustomer, Date startDate, Date endDate) {
+        return billRepository.findBillsByCustomerAndDateRange(idCustomer, startDate, endDate);
+    }
+    
+    public List<Bill> findByIdCustomer(Integer idCustomer) {
+        return billRepository.findByIdCustomer(idCustomer);
+    }
     
 
     /*

@@ -615,6 +615,59 @@ public class Controller implements ActionListener{
     }
 
     private void searchBills() {
+        // si hay un numero de factura buscar por id de factura, si no buscar por id de cliente y fecha si no hay id de cliente buscar todas por fecha
+        // busca todas al entrar en la pestaña 
+        
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID Factura", "ID Cliente", "Fecha", "Total"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getTableBills().setModel(model);
+        
+        String idBillS = managementPage.getIdBill();
+        String idCustomerS = managementPage.getIdCustomer();
+        
+        
+        
+        if(!idBillS.isEmpty() && idCustomerS.isEmpty()) {
+            
+            try {
+                Integer idB = Integer.valueOf(idBillS);
+                Bill billById = billService.getBillById(idB);
+                Object[] billLine = {billById.getIdBill(), billById.getIdCustomer(), billById.getDateBill(), billById.getAmount()};
+                model.addRow(billLine);
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "El id tiene que ser un número");
+            }
+            
+            
+        } else if (!idCustomerS.isEmpty() && idBillS.isEmpty()) {
+            try {
+                Integer id = Integer.valueOf(idCustomerS);
+                List<Bill> listBill = billService.findByIdCustomer(id);
+
+                listBill.forEach((bill) -> {
+                    Object[] billLine = {
+                        bill.getIdBill(),
+                        bill.getIdCustomer(),
+                        bill.getDateBill(),
+                        bill.getAmount()
+                    };
+                    model.addRow(billLine);
+                });
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "El id es un número");
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
+        }
+        
+        
+        
+        
+        
+        
         
     }
 
