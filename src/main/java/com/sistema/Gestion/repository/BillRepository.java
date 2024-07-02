@@ -17,6 +17,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface BillRepository extends JpaRepository<Bill, Integer>{
     
+    
     /*
     @Query("SELECT b FROM Bill b WHERE b.id_customer = :idCustomer AND b.date_bill BETWEEN :startDate AND :endDate")
     List<Bill> findBillByIdCustomerAndDateBetween(

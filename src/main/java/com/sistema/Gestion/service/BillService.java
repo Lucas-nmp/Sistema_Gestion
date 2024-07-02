@@ -42,6 +42,8 @@ public class BillService implements IBillService{
     public void deleteBill(Bill bill) {
         billRepository.delete(bill);
     }
+    
+    
 
     /*
     @Override
@@ -54,5 +56,9 @@ public class BillService implements IBillService{
         return billRepository.findAllByDateBetween(startDate, endDate);
                 
     }*/
+
+    
+
+    
     
 }

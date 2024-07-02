@@ -18,6 +18,8 @@ public interface IBillService {
     
     public void deleteBill(Bill bill);
     
+   
+    
     //public List<Bill> findBillByIdCustomerAndDateBetween(Integer idCustomer, Date startDate, Date endDate);
     
     //public List<Bill> findAllByDateBetween(Date startDate, Date endDate);
