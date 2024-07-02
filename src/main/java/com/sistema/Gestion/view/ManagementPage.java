@@ -224,6 +224,31 @@ public class ManagementPage extends javax.swing.JDialog {
     }
     
     
+    // Elementos Bill panel
+
+    public JButton getSearchAllBill() {
+        return searchAllBills;
+    }
+
+    public JButton getSearchBill() {
+        return searchBills;
+    }
+    
+    public JButton getSearchCustomer() {
+        return searchCustomer;
+    }
+
+    public JTable getTableBills() {
+        return tableBills;
+    }
+
+    
+    
+    
+    
+    
+    
+    
 
     
    
@@ -290,16 +315,22 @@ public class ManagementPage extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        edtNameCustomer1 = new javax.swing.JTextField();
+        idBill = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtPhone3 = new javax.swing.JLabel();
         txtEmail3 = new javax.swing.JLabel();
-        btnSearchSales = new javax.swing.JButton();
-        edtAddressCustomer1 = new javax.swing.JTextField();
-        edtPhoneCustomer1 = new javax.swing.JTextField();
-        edtEmailCustomer1 = new javax.swing.JTextField();
+        searchAllBills = new javax.swing.JButton();
+        idCustomer = new javax.swing.JTextField();
+        monthFrom = new javax.swing.JComboBox<>();
+        dayFrom = new javax.swing.JComboBox<>();
+        yearFrom = new javax.swing.JComboBox<>();
+        dayUntil = new javax.swing.JComboBox<>();
+        monthUntil = new javax.swing.JComboBox<>();
+        yearUntil = new javax.swing.JComboBox<>();
+        searchBills = new javax.swing.JButton();
+        searchCustomer = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tableVentas = new javax.swing.JTable();
+        tableBills = new javax.swing.JTable();
         supplierPanel = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -729,48 +760,86 @@ public class ManagementPage extends javax.swing.JDialog {
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Nombre");
+        jLabel13.setText("ID Factura");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Dirección");
+        jLabel14.setText("ID Cliente");
 
         txtPhone3.setBackground(new java.awt.Color(255, 255, 255));
         txtPhone3.setForeground(new java.awt.Color(255, 255, 255));
-        txtPhone3.setText("Teléfono");
+        txtPhone3.setText("Fecha desde");
 
         txtEmail3.setBackground(new java.awt.Color(255, 255, 255));
         txtEmail3.setForeground(new java.awt.Color(255, 255, 255));
-        txtEmail3.setText("E-Mail");
+        txtEmail3.setText("Fecha hasta");
 
-        btnSearchSales.setText("Guardar");
+        searchAllBills.setText("Ver todas");
+
+        monthFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12" }));
+
+        dayFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "30" }));
+
+        yearFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024" }));
+
+        dayUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "30" }));
+
+        monthUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12" }));
+
+        yearUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024" }));
+
+        searchBills.setText("Ver");
+
+        searchCustomer.setText("Buscar cliente");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(92, 92, 92)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dayFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dayUntil, 0, 1, Short.MAX_VALUE)))
+                            .addComponent(searchAllBills, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(searchBills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(monthFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(monthUntil, 0, 1, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(yearUntil, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel14)
                                 .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel15Layout.createSequentialGroup()
                                     .addComponent(txtEmail3)
-                                    .addGap(12, 12, 12)))
-                            .addComponent(txtPhone3))
-                        .addGap(18, 18, 18)
+                                    .addGap(30, 30, 30)))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPhone3)
+                                    .addComponent(jLabel14))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(edtNameCustomer1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                            .addComponent(edtAddressCustomer1)
-                            .addComponent(edtPhoneCustomer1)
-                            .addComponent(edtEmailCustomer1)))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(btnSearchSales, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchCustomer))
+                            .addComponent(idBill))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -781,28 +850,35 @@ public class ManagementPage extends javax.swing.JDialog {
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel15Layout.createSequentialGroup()
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(edtNameCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(idBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13))
                                 .addGap(48, 48, 48))
                             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(edtAddressCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14)))
-                        .addGap(49, 49, 49))
+                                .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14)
+                                .addComponent(searchCustomer)))
+                        .addGap(48, 48, 48))
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edtPhoneCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPhone3)))
-                .addGap(27, 27, 27)
+                        .addComponent(txtPhone3)
+                        .addComponent(monthFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dayFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail3)
-                    .addComponent(edtEmailCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(btnSearchSales)
-                .addGap(20, 20, 20))
+                    .addComponent(dayUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monthUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchAllBills)
+                    .addComponent(searchBills))
+                .addGap(25, 25, 25))
         );
 
         jPanel14.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 330, 270));
 
-        tableVentas.setModel(new javax.swing.table.DefaultTableModel(
+        tableBills.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -813,7 +889,7 @@ public class ManagementPage extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(tableVentas);
+        jScrollPane5.setViewportView(tableBills);
 
         javax.swing.GroupLayout salesPanelLayout = new javax.swing.GroupLayout(salesPanel);
         salesPanel.setLayout(salesPanelLayout);
@@ -1045,25 +1121,24 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JButton btnModifyCustomer;
     private javax.swing.JButton btnModifyProduct;
     private javax.swing.JButton btnModifySupplier;
-    private javax.swing.JButton btnSearchSales;
     private javax.swing.JComboBox<String> cmbFamilyProduct;
     private javax.swing.JPanel customerPanel;
+    private javax.swing.JComboBox<String> dayFrom;
+    private javax.swing.JComboBox<String> dayUntil;
     private javax.swing.JTextField edtAddressCustomer;
-    private javax.swing.JTextField edtAddressCustomer1;
     private javax.swing.JTextField edtAddressSupplier;
     private javax.swing.JTextField edtCifSupplier;
     private javax.swing.JTextField edtEmailCustomer;
-    private javax.swing.JTextField edtEmailCustomer1;
     private javax.swing.JTextField edtEmailSupplier;
     private javax.swing.JTextField edtNameCustomer;
-    private javax.swing.JTextField edtNameCustomer1;
     private javax.swing.JTextField edtNameProduct;
     private javax.swing.JTextField edtNameSupplier;
     private javax.swing.JTextField edtPhoneCustomer;
-    private javax.swing.JTextField edtPhoneCustomer1;
     private javax.swing.JTextField edtPhoneSupplier;
     private javax.swing.JTextField edtPriceProduct;
     private javax.swing.JTextField edtStckProduct;
+    private javax.swing.JTextField idBill;
+    private javax.swing.JTextField idCustomer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1101,14 +1176,19 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPanel;
+    private javax.swing.JComboBox<String> monthFrom;
+    private javax.swing.JComboBox<String> monthUntil;
     private javax.swing.JPanel newSalePanel;
     private javax.swing.JPanel productPanel;
     private javax.swing.JPanel salesPanel;
+    private javax.swing.JButton searchAllBills;
+    private javax.swing.JButton searchBills;
+    private javax.swing.JButton searchCustomer;
     private javax.swing.JPanel supplierPanel;
+    private javax.swing.JTable tableBills;
     private javax.swing.JTable tableCustomer;
     private javax.swing.JTable tableProduct;
     private javax.swing.JTable tableSupplier;
-    private javax.swing.JTable tableVentas;
     private javax.swing.JLabel txtEmail;
     private javax.swing.JLabel txtEmail1;
     private javax.swing.JLabel txtEmail2;
@@ -1118,5 +1198,7 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JLabel txtPhone2;
     private javax.swing.JLabel txtPhone3;
     private javax.swing.JLabel txtTitulo;
+    private javax.swing.JComboBox<String> yearFrom;
+    private javax.swing.JComboBox<String> yearUntil;
     // End of variables declaration//GEN-END:variables
 }

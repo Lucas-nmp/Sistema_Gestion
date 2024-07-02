@@ -1,9 +1,11 @@
 package com.sistema.Gestion.controller;
 
+import com.sistema.Gestion.model.Bill;
 import com.sistema.Gestion.model.Customer;
 import com.sistema.Gestion.model.Product;
 import com.sistema.Gestion.model.Supplier;
 import com.sistema.Gestion.model.User;
+import com.sistema.Gestion.service.BillService;
 import com.sistema.Gestion.service.CustomerService;
 import com.sistema.Gestion.service.ProductService;
 import com.sistema.Gestion.service.SupplierService;
@@ -48,6 +50,9 @@ public class Controller implements ActionListener{
     @Autowired
     private ProductService productService;
     
+    @Autowired
+    private BillService billService;
+    
 
     private ManagementPage managementPage;
     private LoginPage loginPage;
@@ -56,6 +61,7 @@ public class Controller implements ActionListener{
     private Integer idCustomer;
     private Integer idSupplier;
     private Integer idProduct;
+    private Integer idBill;
     
     
     @Autowired
@@ -152,6 +158,7 @@ public class Controller implements ActionListener{
                 fillCustomerTable();
                 fillSupplierTable();
                 fillPruductTable();
+                fillBillTable();
             }
             
         });
@@ -187,6 +194,11 @@ public class Controller implements ActionListener{
             }
             
         });
+        
+        // Acciones Bill
+        this.managementPage.getSearchAllBill().addActionListener(this);
+        this.managementPage.getSearchBill().addActionListener(this);
+        this.managementPage.getSearchCustomer().addActionListener(this);
         
         
         
@@ -270,6 +282,12 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == managementPage.getBtnDeleteProduct()) {
             deleteProduct();
+        }
+        
+        // Bills
+        
+        if(e.getSource() == managementPage.getSearchAllBill()) {
+            searchBills();
         }
          
         
@@ -397,6 +415,24 @@ public class Controller implements ActionListener{
                 product.getStock()
             };
             model.addRow(productLine);
+        });
+    }
+    
+    private void fillBillTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID Factura", "ID Cliente", "Fecha", "Total"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getTableBills().setModel(model);
+        List<Bill> listBill = billService.getAllBills();
+        
+        listBill.forEach((bill) -> {
+            Object[] billLine = {
+                bill.getIdBill(),
+                bill.getIdCustomer(),
+                bill.getDateBill(),
+                bill.getAmount()
+            };
+            model.addRow(billLine);
         });
     }
     
@@ -575,6 +611,10 @@ public class Controller implements ActionListener{
                 JOptionPane.showMessageDialog(managementPage, "Los campos stock y precio tienen que ser números");
             }
         }
+        
+    }
+
+    private void searchBills() {
         
     }
 
