@@ -17,6 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -197,7 +201,6 @@ public class Controller implements ActionListener{
         
         // Acciones Bill
         this.managementPage.getSearchAllBill().addActionListener(this);
-        this.managementPage.getSearchBill().addActionListener(this);
         this.managementPage.getSearchCustomer().addActionListener(this);
         
         
@@ -637,10 +640,79 @@ public class Controller implements ActionListener{
                 model.addRow(billLine);
                 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(managementPage, "El id tiene que ser un número");
+                JOptionPane.showMessageDialog(managementPage, "El id de factura es un número");
+            }
+          
+        
+        } else if (idCustomerS.isEmpty() && idBillS.isEmpty()) {
+            String dayFrom = managementPage.getDayFrom();
+            String dayTo = managementPage.getDayTo();
+            String monthFrom = managementPage.getMonthFrom();
+            String monthTo = managementPage.getMonthTo();
+            String yearFrom = managementPage.getYearFrom();
+            String yearTo = managementPage.getYearTo();
+            
+            try {
+                LocalDate localDateFrom = LocalDate.of(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
+                Date dateFrom = Date.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                LocalDate localDateTo = LocalDate.of(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
+                Date dateTo = Date.from(localDateTo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                // Llamada al método del repositorio
+                List<Bill> bills = billService.findByDate(dateFrom, dateTo);
+                
+                
+                bills.forEach((bill) -> {
+                    Object[] billLine = {
+                        bill.getIdBill(),
+                        bill.getIdCustomer(),
+                        bill.getDateBill(),
+                        bill.getAmount()
+                    };
+                    model.addRow(billLine);
+                });
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "El id de cliente es un número");
+            }
+        
+        } else if (!idCustomerS.isEmpty() && idBillS.isEmpty()) {
+            String dayFrom = managementPage.getDayFrom();
+            String dayTo = managementPage.getDayTo();
+            String monthFrom = managementPage.getMonthFrom();
+            String monthTo = managementPage.getMonthTo();
+            String yearFrom = managementPage.getYearFrom();
+            String yearTo = managementPage.getYearTo();
+            
+            try {
+                
+                LocalDate localDateFrom = LocalDate.of(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
+                Date dateFrom = Date.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                LocalDate localDateTo = LocalDate.of(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
+                Date dateTo = Date.from(localDateTo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                // Llamada al método del repositorio
+                List<Bill> bills = billService.findBillsByCustomerAndDateRange(Integer.valueOf(idCustomerS), dateFrom, dateTo);
+                
+                
+                bills.forEach((bill) -> {
+                    Object[] billLine = {
+                        bill.getIdBill(),
+                        bill.getIdCustomer(),
+                        bill.getDateBill(),
+                        bill.getAmount()
+                    };
+                    model.addRow(billLine);
+                });
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "El id de cliente es un número");
             }
             
-            
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
+        }    
+        /*    
         } else if (!idCustomerS.isEmpty() && idBillS.isEmpty()) {
             try {
                 Integer id = Integer.valueOf(idCustomerS);
@@ -656,13 +728,13 @@ public class Controller implements ActionListener{
                     model.addRow(billLine);
                 });
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(managementPage, "El id es un número");
+                JOptionPane.showMessageDialog(managementPage, "El id tiene que ser un número");
             }
             
         } else {
             JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
         }
-        
+        */
         
         
         

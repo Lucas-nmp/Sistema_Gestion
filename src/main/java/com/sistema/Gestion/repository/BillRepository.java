@@ -28,6 +28,9 @@ public interface BillRepository extends JpaRepository<Bill, Integer>{
     @Query("SELECT b FROM Bill b WHERE b.idCustomer = :idCustomer")
     List<Bill> findByIdCustomer(@Param("idCustomer") Integer idCustomer);
     
+    @Query("SELECT b FROM Bill b WHERE b.dateBill BETWEEN :startDate AND :endDate")
+    List<Bill> findByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    
     /*
     @Query("SELECT b FROM Bill b WHERE b.id_customer = :idCustomer AND b.date_bill BETWEEN :startDate AND :endDate")
     List<Bill> findBillByIdCustomerAndDateBetween(

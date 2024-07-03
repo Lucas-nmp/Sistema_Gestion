@@ -51,6 +51,10 @@ public class BillService implements IBillService{
         return billRepository.findByIdCustomer(idCustomer);
     }
     
+    public List<Bill> findByDate(Date startDate, Date endDate) {
+        return billRepository.findByDate(startDate, endDate);
+    }
+    
 
     /*
     @Override

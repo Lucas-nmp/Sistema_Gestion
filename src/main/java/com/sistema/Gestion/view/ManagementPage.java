@@ -4,6 +4,9 @@
  */
 package com.sistema.Gestion.view;
 
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,6 +29,7 @@ public class ManagementPage extends javax.swing.JDialog {
     @Autowired
     public ManagementPage() {
         initComponents();
+        setJCombo();
     }
     
     public JLabel getLavelTitulo() {
@@ -230,10 +234,7 @@ public class ManagementPage extends javax.swing.JDialog {
         return searchAllBills;
     }
 
-    public JButton getSearchBill() {
-        return searchBills;
-    }
-    
+        
     public JButton getSearchCustomer() {
         return searchCustomer;
     }
@@ -253,22 +254,89 @@ public class ManagementPage extends javax.swing.JDialog {
     public String getIdBill() {
         return idBill.getText();
     }
+
+    public String getDayFrom() {
+        return dayFrom.getSelectedItem().toString();
+    }
+
+    public String getDayTo() {
+        return dayTo.getSelectedItem().toString();
+    }
+
+    public String getMonthFrom() {
+        return monthFrom.getSelectedItem().toString();
+    }
+
+    public String getMonthTo() {
+        return monthTo.getSelectedItem().toString();
+    }
+
+    public String getYearFrom() {
+        return yearFrom.getSelectedItem().toString();
+    }
+
+    public String getYearTo() {
+        return yearTo.getSelectedItem().toString();
+    }
     
     
+    
+    
+    
+    private void setJCombo() {
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int previousYear = currentYear - 1;
+        
+        yearFrom.addItem(String.valueOf(currentYear));
+        yearFrom.addItem(String.valueOf(previousYear));
+        
+        yearTo.addItem(String.valueOf(currentYear));
+        yearTo.addItem(String.valueOf(previousYear));
+        
+        for (int month = 1; month<=12; month++) {
+            monthFrom.addItem(String.valueOf(month));
+            monthTo.addItem(String.valueOf(month));
+        }
+        
+        ActionListener updateDaysFromListener = e -> updateDays(yearFrom, monthFrom, dayFrom);
+        ActionListener updateDaysToListener = e -> updateDays(yearTo, monthTo, dayTo);
+
+        yearFrom.addActionListener(updateDaysFromListener);
+        monthFrom.addActionListener(updateDaysFromListener);
+        yearTo.addActionListener(updateDaysToListener);
+        monthTo.addActionListener(updateDaysToListener);
+
+        // Initial population of days
+        yearFrom.setSelectedItem(String.valueOf(previousYear));
+        monthFrom.setSelectedItem("1");
+        updateDays(yearFrom, monthFrom, dayFrom);
+        dayFrom.setSelectedItem("1");
+
+        yearTo.setSelectedItem(String.valueOf(currentYear));
+        monthTo.setSelectedItem(String.valueOf(currentDate.getMonthValue()));
+        updateDays(yearTo, monthTo, dayTo);
+        dayTo.setSelectedItem(String.valueOf(currentDate.getDayOfMonth()));
+        
+        
+    }
+    
+    private void updateDays(JComboBox<String> yearCombo, JComboBox<String> monthCombo, JComboBox<String> dayCombo) {
+        if (yearCombo.getSelectedItem() != null && monthCombo.getSelectedItem() != null) {
+            int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
+            int selectedMonth = Integer.parseInt((String) monthCombo.getSelectedItem());
+
+            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
+            int daysInMonth = yearMonth.lengthOfMonth();
+
+            dayCombo.removeAllItems();
+            for (int day = 1; day <= daysInMonth; day++) {
+                dayCombo.addItem(String.valueOf(day));
+            }
+        }
+    }
 
     
-    
-    
-    
-    
-    
-    
-
-    
-   
-   
-    
-  
     
     
 
@@ -338,10 +406,9 @@ public class ManagementPage extends javax.swing.JDialog {
         monthFrom = new javax.swing.JComboBox<>();
         dayFrom = new javax.swing.JComboBox<>();
         yearFrom = new javax.swing.JComboBox<>();
-        dayUntil = new javax.swing.JComboBox<>();
-        monthUntil = new javax.swing.JComboBox<>();
-        yearUntil = new javax.swing.JComboBox<>();
-        searchBills = new javax.swing.JButton();
+        dayTo = new javax.swing.JComboBox<>();
+        monthTo = new javax.swing.JComboBox<>();
+        yearTo = new javax.swing.JComboBox<>();
         searchCustomer = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableBills = new javax.swing.JTable();
@@ -790,20 +857,6 @@ public class ManagementPage extends javax.swing.JDialog {
 
         searchAllBills.setText("Buscar");
 
-        monthFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12" }));
-
-        dayFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "30" }));
-
-        yearFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024" }));
-
-        dayUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "30" }));
-
-        monthUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12" }));
-
-        yearUntil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024" }));
-
-        searchBills.setText("Ver");
-
         searchCustomer.setText("Buscar cliente");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -813,28 +866,6 @@ public class ManagementPage extends javax.swing.JDialog {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dayFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dayUntil, 0, 1, Short.MAX_VALUE)))
-                            .addComponent(searchAllBills, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(searchBills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(monthFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(monthUntil, 0, 1, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(yearUntil, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(19, 19, 19))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -853,7 +884,24 @@ public class ManagementPage extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(searchCustomer))
                             .addComponent(idBill))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(searchAllBills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel15Layout.createSequentialGroup()
+                                .addGap(92, 92, 92)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dayFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dayTo, 0, 1, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(monthFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(monthTo, 0, 1, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(yearTo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(19, 19, 19))))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -880,13 +928,11 @@ public class ManagementPage extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail3)
-                    .addComponent(dayUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(monthUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearUntil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dayTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monthTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchAllBills)
-                    .addComponent(searchBills))
+                .addComponent(searchAllBills)
                 .addGap(25, 25, 25))
         );
 
@@ -1138,7 +1184,7 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbFamilyProduct;
     private javax.swing.JPanel customerPanel;
     private javax.swing.JComboBox<String> dayFrom;
-    private javax.swing.JComboBox<String> dayUntil;
+    private javax.swing.JComboBox<String> dayTo;
     private javax.swing.JTextField edtAddressCustomer;
     private javax.swing.JTextField edtAddressSupplier;
     private javax.swing.JTextField edtCifSupplier;
@@ -1191,12 +1237,11 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JComboBox<String> monthFrom;
-    private javax.swing.JComboBox<String> monthUntil;
+    private javax.swing.JComboBox<String> monthTo;
     private javax.swing.JPanel newSalePanel;
     private javax.swing.JPanel productPanel;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JButton searchAllBills;
-    private javax.swing.JButton searchBills;
     private javax.swing.JButton searchCustomer;
     private javax.swing.JPanel supplierPanel;
     private javax.swing.JTable tableBills;
@@ -1213,6 +1258,6 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JLabel txtPhone3;
     private javax.swing.JLabel txtTitulo;
     private javax.swing.JComboBox<String> yearFrom;
-    private javax.swing.JComboBox<String> yearUntil;
+    private javax.swing.JComboBox<String> yearTo;
     // End of variables declaration//GEN-END:variables
 }
