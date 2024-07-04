@@ -11,6 +11,7 @@ import com.sistema.Gestion.service.ProductService;
 import com.sistema.Gestion.service.SupplierService;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
+import com.sistema.Gestion.view.LookFor;
 import com.sistema.Gestion.view.ManagementPage;
 import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
@@ -61,11 +62,13 @@ public class Controller implements ActionListener{
     private ManagementPage managementPage;
     private LoginPage loginPage;
     private NewUserPage newUserPage;
+    private LookFor lookFor;
     
     private Integer idCustomer;
     private Integer idSupplier;
     private Integer idProduct;
     private Integer idBill;
+    
     
     
     @Autowired
@@ -83,6 +86,29 @@ public class Controller implements ActionListener{
         
         this.newUserPage.getBtnExit().addActionListener(this);
         this.newUserPage.getBtnAddUser().addActionListener(this);
+    }
+    
+    @Autowired
+    public void setLookFor(LookFor lookFor) {
+        this.lookFor = lookFor;
+        this.lookFor.getLookForSelect().addActionListener(this);
+        
+        this.lookFor.getLookForTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    
+                    idCustomer = (int) target.getValueAt(row, 0);
+                    managementPage.setIdCustomer(String.valueOf(idCustomer));
+                    
+                }
+            }
+            
+        });
+        
+        
     }
     
     @Autowired
@@ -203,6 +229,8 @@ public class Controller implements ActionListener{
         this.managementPage.getSearchAllBill().addActionListener(this);
         this.managementPage.getSearchCustomer().addActionListener(this);
         
+       
+        
         
         
     }
@@ -292,6 +320,14 @@ public class Controller implements ActionListener{
         if(e.getSource() == managementPage.getSearchAllBill()) {
             searchBills();
         }
+        
+        if (e.getSource() == managementPage.getSearchCustomer()) {
+            lookForCustomer();
+        }
+        
+        if (e.getSource() == lookFor.getLookForSelect()) {
+            lookFor.dispose();
+        }
          
         
     }
@@ -332,7 +368,7 @@ public class Controller implements ActionListener{
         if (access) {
             managementPage.setModal(true);
             managementPage.setLocationRelativeTo(null);
-            managementPage.getJTabbedPanel().setSelectedIndex(4);
+            managementPage.getJTabbedPanel().setSelectedIndex(3);
             managementPage.setVisible(true);
             
         } else {
@@ -734,13 +770,36 @@ public class Controller implements ActionListener{
         } else {
             JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
         }
-        */
+        */   
+    }
+
+    private void lookForCustomer() {
+        lookFor.setModal(true);
+        lookFor.setLocationRelativeTo(null);
+        lookFor.setTitle("Buscar cliente");
+        lookFor.setLookForTitle("Clientes");
+        fillLookForTableCustomer();
+        lookFor.setVisible(true);
         
         
+    }
+
+    private void fillLookForTableCustomer() {
+        List<Customer> customers = customerService.getAllCustomers();
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Nombre"};
+        model.setColumnIdentifiers(cabeceras);
+        lookFor.getLookForTable().setModel(model);
         
+        customers.forEach((customer) -> {
+            Object[] customerLine = {
+                customer.getIdCustomer(),
+                customer.getName()
+            };
+            model.addRow(customerLine);
+        });
         
-        
-        
+   
     }
 
     
