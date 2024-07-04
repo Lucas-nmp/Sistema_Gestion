@@ -100,9 +100,13 @@ public class Controller implements ActionListener{
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     
-                    idCustomer = (int) target.getValueAt(row, 0);
-                    managementPage.setIdCustomer(String.valueOf(idCustomer));
+                    //idCustomer = (int) target.getValueAt(row, 0);
+                    //managementPage.setIdCustomer(String.valueOf(idCustomer));
+                    managementPage.setIdCustomer(String.valueOf(target.getValueAt(row, 0)));
                     
+                    // Serviría para llenar los datos en la nueva venta
+                    //managementPage.setInvoiceIdCustomer(String.valueOf(target.getValueAt(row, 0)));
+                    //managementPage.setInvoiceNameCustomer(String.valueOf(target.getValueAt(row, 1)));
                 }
             }
             
@@ -230,6 +234,10 @@ public class Controller implements ActionListener{
         this.managementPage.getSearchCustomer().addActionListener(this);
         
        
+        // Acciones New Sale
+        this.managementPage.getInvoiceSearchCustomer().addActionListener(this);
+        this.managementPage.getInvoiceAddProduct().addActionListener(this);
+        
         
         
         
@@ -327,6 +335,15 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == lookFor.getLookForSelect()) {
             lookFor.dispose();
+        }
+        
+        // New Sale
+        if (e.getSource() == managementPage.getInvoiceAddCustomer()) {
+            
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceSearchCustomer()) {
+            lookForCustomer();
         }
          
         

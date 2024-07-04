@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package com.sistema.Gestion.view;
 
 import java.awt.event.ActionListener;
@@ -10,6 +7,7 @@ import java.time.YearMonth;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -280,9 +278,6 @@ public class ManagementPage extends javax.swing.JDialog {
     }
     
     
-    
-    
-    
     private void setJCombo() {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
@@ -335,6 +330,82 @@ public class ManagementPage extends javax.swing.JDialog {
             }
         }
     }
+    
+    
+    
+    // Elementos nueva venta 
+
+    
+    public JButton getInvoiceClean() {
+        return InvoiceClean;
+    }
+
+    public JButton getInvoiceCleanLine() {
+        return InvoiceCleanLine;
+    }
+
+    public JButton getInvoiceAddCustomer() {
+        return invoiceAddCustomer;
+    }
+
+    public JButton getInvoiceConfirm() {
+        return invoiceConfirm;
+    }
+
+    public JButton getInvoiceSearchCustomer() {
+        return invoiceSearchCustomer;
+    }
+
+    public JButton getInvoiceSearchProducr() {
+        return invoiceAddProduct;
+    }
+
+    public JButton getInvoiceAddProduct() {
+        return invoiceAddProduct;
+    }
+
+    public JButton getInvoiceSee() {
+        return invoiceSee;
+    }
+
+    public JTable getInvoiceCustomer() {
+        return InvoiceCustomer;
+    }
+
+    public JTable getInvoiceDataProduct() {
+        return InvoiceDataProduct;
+    }
+
+    public String getInvoiceIdCustomer() {
+        return invoiceIdCustomer.getText();
+    }
+
+    public String getInvoiceIdProduct() {
+        return invoiceIdProduct.getText();
+    }
+
+    public String getInvoiceAmountProduct() {
+        return invoiceAmountProduct.getValue().toString();
+    }
+
+    public void setInvoiceIdCustomer(String invoiceIdCustomer) {
+        this.invoiceIdCustomer.setText(invoiceIdCustomer);
+    }
+
+    public void setInvoiceIdProduct(String invoiceIdProduct) {
+        this.invoiceIdProduct.setText(invoiceIdProduct);
+    }
+
+    public void setInvoiceNameCustomer(String invoiceNameCustomer) {
+        this.invoiceNameCustomer.setText(invoiceNameCustomer);
+    }
+    
+    
+    
+    
+    
+    
+    
 
     
     
@@ -354,6 +425,25 @@ public class ManagementPage extends javax.swing.JDialog {
         txtTitulo = new javax.swing.JLabel();
         jTabbedPanel = new javax.swing.JTabbedPane();
         newSalePanel = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        InvoiceDataProduct = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        InvoiceCustomer = new javax.swing.JTable();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        invoiceIdProduct = new javax.swing.JTextField();
+        invoiceSearchCustomer = new javax.swing.JButton();
+        invoiceAmountProduct = new javax.swing.JSpinner();
+        invoiceAddCustomer = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        invoiceIdCustomer = new javax.swing.JTextField();
+        invoiceAddProduct = new javax.swing.JButton();
+        invoiceSearchProduct = new javax.swing.JButton();
+        invoiceNameCustomer = new javax.swing.JTextField();
+        invoiceSee = new javax.swing.JButton();
+        InvoiceClean = new javax.swing.JButton();
+        InvoiceCleanLine = new javax.swing.JButton();
+        invoiceConfirm = new javax.swing.JButton();
         customerPanel = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -477,17 +567,142 @@ public class ManagementPage extends javax.swing.JDialog {
         jTabbedPanel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         newSalePanel.setBackground(new java.awt.Color(255, 255, 255));
+        newSalePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout newSalePanelLayout = new javax.swing.GroupLayout(newSalePanel);
-        newSalePanel.setLayout(newSalePanelLayout);
-        newSalePanelLayout.setHorizontalGroup(
-            newSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1081, Short.MAX_VALUE)
+        InvoiceDataProduct.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(InvoiceDataProduct);
+
+        newSalePanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 670, 280));
+
+        InvoiceCustomer.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(InvoiceCustomer);
+
+        newSalePanel.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 670, 70));
+
+        jPanel16.setBackground(new java.awt.Color(0, 0, 204));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Cliente");
+
+        invoiceSearchCustomer.setText("b");
+
+        invoiceAddCustomer.setText("Añadir");
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Artículo");
+
+        invoiceAddProduct.setText("Añadir");
+
+        invoiceSearchProduct.setText("b");
+
+        invoiceSee.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        invoiceSee.setText("Ver Factura");
+
+        InvoiceClean.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        InvoiceClean.setText("Limpiar Todo");
+        InvoiceClean.setActionCommand("Limpiar");
+
+        InvoiceCleanLine.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        InvoiceCleanLine.setText("Eliminar linea");
+
+        invoiceConfirm.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        invoiceConfirm.setText("Confirmar venta");
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(24, 24, 24)
+                        .addComponent(invoiceIdCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(invoiceNameCustomer)
+                        .addGap(18, 18, 18)
+                        .addComponent(invoiceSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(invoiceAddCustomer))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(invoiceConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(InvoiceClean, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(18, 18, 18)
+                                .addComponent(invoiceIdProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(invoiceSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                    .addGap(18, 18, Short.MAX_VALUE)
+                                    .addComponent(invoiceAmountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(invoiceAddProduct))
+                                .addGroup(jPanel16Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(InvoiceCleanLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(invoiceSee, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(25, 25, 25))
         );
-        newSalePanelLayout.setVerticalGroup(
-            newSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(invoiceSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(invoiceAddCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(invoiceIdCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(invoiceNameCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(invoiceIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(invoiceAmountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(invoiceAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(invoiceSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InvoiceClean)
+                    .addComponent(InvoiceCleanLine))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(invoiceSee)
+                    .addComponent(invoiceConfirm))
+                .addGap(54, 54, 54))
         );
+
+        newSalePanel.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 350));
 
         jTabbedPanel.addTab("Nueva Venta", newSalePanel);
 
@@ -1172,6 +1387,10 @@ public class ManagementPage extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton InvoiceClean;
+    private javax.swing.JButton InvoiceCleanLine;
+    private javax.swing.JTable InvoiceCustomer;
+    private javax.swing.JTable InvoiceDataProduct;
     private javax.swing.JButton btnAddCustomer;
     private javax.swing.JButton btnAddProduct;
     private javax.swing.JButton btnAddSupplier;
@@ -1199,12 +1418,24 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JTextField edtStckProduct;
     private javax.swing.JTextField idBill;
     private javax.swing.JTextField idCustomer;
+    private javax.swing.JButton invoiceAddCustomer;
+    private javax.swing.JButton invoiceAddProduct;
+    private javax.swing.JSpinner invoiceAmountProduct;
+    private javax.swing.JButton invoiceConfirm;
+    private javax.swing.JTextField invoiceIdCustomer;
+    private javax.swing.JTextField invoiceIdProduct;
+    private javax.swing.JTextField invoiceNameCustomer;
+    private javax.swing.JButton invoiceSearchCustomer;
+    private javax.swing.JButton invoiceSearchProduct;
+    private javax.swing.JButton invoiceSee;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1223,6 +1454,7 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1234,7 +1466,9 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JComboBox<String> monthFrom;
     private javax.swing.JComboBox<String> monthTo;
