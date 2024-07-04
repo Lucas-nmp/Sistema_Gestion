@@ -68,6 +68,7 @@ public class Controller implements ActionListener{
     private Integer idSupplier;
     private Integer idProduct;
     private Integer idBill;
+    private Customer newCustomer;
     
     
     
@@ -102,11 +103,16 @@ public class Controller implements ActionListener{
                     
                     //idCustomer = (int) target.getValueAt(row, 0);
                     //managementPage.setIdCustomer(String.valueOf(idCustomer));
-                    managementPage.setIdCustomer(String.valueOf(target.getValueAt(row, 0)));
+                    //managementPage.setIdCustomer(String.valueOf(target.getValueAt(row, 0)));
                     
                     // Serviría para llenar los datos en la nueva venta
                     //managementPage.setInvoiceIdCustomer(String.valueOf(target.getValueAt(row, 0)));
                     //managementPage.setInvoiceNameCustomer(String.valueOf(target.getValueAt(row, 1)));
+                    newCustomer = customerService.getCustomerById((int) target.getValueAt(row, 0));
+                    managementPage.setIdCustomer(newCustomer.getIdCustomer().toString());
+                    managementPage.setInvoiceIdCustomer(newCustomer.getIdCustomer().toString());
+                    managementPage.setInvoiceNameCustomer(newCustomer.getName());
+                    
                 }
             }
             
@@ -193,6 +199,9 @@ public class Controller implements ActionListener{
                 fillSupplierTable();
                 fillPruductTable();
                 fillBillTable();
+                managementPage.setIdCustomer("");
+                managementPage.setInvoiceIdCustomer("");
+                managementPage.setInvoiceNameCustomer("");
             }
             
         });
@@ -237,6 +246,8 @@ public class Controller implements ActionListener{
         // Acciones New Sale
         this.managementPage.getInvoiceSearchCustomer().addActionListener(this);
         this.managementPage.getInvoiceAddProduct().addActionListener(this);
+        this.managementPage.getInvoiceAddCustomer().addActionListener(this);
+        this.managementPage.getInvoiceClean().addActionListener(this);
         
         
         
@@ -339,11 +350,16 @@ public class Controller implements ActionListener{
         
         // New Sale
         if (e.getSource() == managementPage.getInvoiceAddCustomer()) {
+            addInvoiceCustomer();
             
         }
         
         if (e.getSource() == managementPage.getInvoiceSearchCustomer()) {
             lookForCustomer();
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceClean()) {
+            cleanAllNewInvoice();
         }
          
         
@@ -817,6 +833,27 @@ public class Controller implements ActionListener{
         });
         
    
+    }
+
+    private void addInvoiceCustomer() {
+        if (newCustomer != null) {
+            managementPage.setNewInvCustomerName(newCustomer.getName());
+            managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
+            managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
+            managementPage.setInvoiceIdCustomer("");
+            managementPage.setInvoiceNameCustomer("");
+        }
+        
+        
+    }
+
+    private void cleanAllNewInvoice() {
+        managementPage.setNewInvCustomerName("Nombre");
+        managementPage.setNewInvCustomerAddres("Dirección");
+        managementPage.setNewInvCustomerPhone("Teléfono");
+        managementPage.setInvoiceIdCustomer("");
+        managementPage.setInvoiceNameCustomer("");
+        newCustomer = null;
     }
 
     

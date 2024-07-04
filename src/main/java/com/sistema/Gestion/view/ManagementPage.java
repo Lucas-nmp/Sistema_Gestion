@@ -368,10 +368,18 @@ public class ManagementPage extends javax.swing.JDialog {
         return invoiceSee;
     }
 
-    public JTable getInvoiceCustomer() {
-        return InvoiceCustomer;
+    public void setNewInvCustomerAddres(String newInvCustomerAddres) {
+        this.newInvCustomerAddres.setText(newInvCustomerAddres);
     }
 
+    public void setNewInvCustomerName(String newInvCustomerName) {
+        this.newInvCustomerName.setText(newInvCustomerName);
+    }
+
+    public void setNewInvCustomerPhone(String newInvCustomerPhone) {
+        this.newInvCustomerPhone.setText(newInvCustomerPhone);
+    }
+    
     public JTable getInvoiceDataProduct() {
         return InvoiceDataProduct;
     }
@@ -427,8 +435,6 @@ public class ManagementPage extends javax.swing.JDialog {
         newSalePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         InvoiceDataProduct = new javax.swing.JTable();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        InvoiceCustomer = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         invoiceIdProduct = new javax.swing.JTextField();
@@ -444,6 +450,9 @@ public class ManagementPage extends javax.swing.JDialog {
         InvoiceClean = new javax.swing.JButton();
         InvoiceCleanLine = new javax.swing.JButton();
         invoiceConfirm = new javax.swing.JButton();
+        newInvCustomerName = new javax.swing.JLabel();
+        newInvCustomerAddres = new javax.swing.JLabel();
+        newInvCustomerPhone = new javax.swing.JLabel();
         customerPanel = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -584,28 +593,17 @@ public class ManagementPage extends javax.swing.JDialog {
 
         newSalePanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 670, 280));
 
-        InvoiceCustomer.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane6.setViewportView(InvoiceCustomer);
-
-        newSalePanel.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 670, 70));
-
         jPanel16.setBackground(new java.awt.Color(0, 0, 204));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Cliente");
 
-        invoiceSearchCustomer.setText("b");
+        invoiceIdProduct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        invoiceSearchCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupaMini.png"))); // NOI18N
+
+        invoiceAmountProduct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         invoiceAddCustomer.setText("Añadir");
 
@@ -613,9 +611,13 @@ public class ManagementPage extends javax.swing.JDialog {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Artículo");
 
+        invoiceIdCustomer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         invoiceAddProduct.setText("Añadir");
 
-        invoiceSearchProduct.setText("b");
+        invoiceSearchProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupaMini.png"))); // NOI18N
+
+        invoiceNameCustomer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         invoiceSee.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         invoiceSee.setText("Ver Factura");
@@ -644,8 +646,8 @@ public class ManagementPage extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(invoiceNameCustomer)
                         .addGap(18, 18, 18)
-                        .addComponent(invoiceSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(invoiceSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(invoiceAddCustomer))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -654,22 +656,20 @@ public class ManagementPage extends javax.swing.JDialog {
                             .addGroup(jPanel16Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
                                 .addGap(18, 18, 18)
-                                .addComponent(invoiceIdProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(invoiceIdProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(invoiceSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(invoiceSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                                    .addGap(18, 18, Short.MAX_VALUE)
-                                    .addComponent(invoiceAmountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(invoiceAddProduct))
-                                .addGroup(jPanel16Layout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(InvoiceCleanLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addComponent(invoiceAmountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(invoiceSee, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(invoiceAddProduct))
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(invoiceSee, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(InvoiceCleanLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(25, 25, 25))
         );
         jPanel16Layout.setVerticalGroup(
@@ -691,7 +691,7 @@ public class ManagementPage extends javax.swing.JDialog {
                         .addComponent(invoiceAmountProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(invoiceAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(invoiceSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InvoiceClean)
                     .addComponent(InvoiceCleanLine))
@@ -703,6 +703,15 @@ public class ManagementPage extends javax.swing.JDialog {
         );
 
         newSalePanel.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 350));
+
+        newInvCustomerName.setText("Nombre");
+        newSalePanel.add(newInvCustomerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
+
+        newInvCustomerAddres.setText("Dirección");
+        newSalePanel.add(newInvCustomerAddres, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, -1, -1));
+
+        newInvCustomerPhone.setText("Teléfono");
+        newSalePanel.add(newInvCustomerPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
 
         jTabbedPanel.addTab("Nueva Venta", newSalePanel);
 
@@ -1072,7 +1081,7 @@ public class ManagementPage extends javax.swing.JDialog {
 
         searchAllBills.setText("Buscar");
 
-        searchCustomer.setText("Buscar cliente");
+        searchCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupaMini.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1093,13 +1102,14 @@ public class ManagementPage extends javax.swing.JDialog {
                                     .addComponent(txtPhone3)
                                     .addComponent(jLabel14))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(searchCustomer))
-                            .addComponent(idBill))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(idBill)
+                                .addGap(20, 20, 20))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(searchAllBills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1114,9 +1124,13 @@ public class ManagementPage extends javax.swing.JDialog {
                                     .addComponent(monthTo, 0, 1, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(yearTo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(yearTo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(yearFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(19, 19, 19))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchCustomer)
+                .addGap(28, 28, 28))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1124,15 +1138,17 @@ public class ManagementPage extends javax.swing.JDialog {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(idBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(idBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13))
-                                .addGap(48, 48, 48))
-                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14)
+                                    .addComponent(idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel14)))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
                                 .addComponent(searchCustomer)))
                         .addGap(48, 48, 48))
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1146,7 +1162,7 @@ public class ManagementPage extends javax.swing.JDialog {
                     .addComponent(dayTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(monthTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(yearTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(searchAllBills)
                 .addGap(25, 25, 25))
         );
@@ -1389,7 +1405,6 @@ public class ManagementPage extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InvoiceClean;
     private javax.swing.JButton InvoiceCleanLine;
-    private javax.swing.JTable InvoiceCustomer;
     private javax.swing.JTable InvoiceDataProduct;
     private javax.swing.JButton btnAddCustomer;
     private javax.swing.JButton btnAddProduct;
@@ -1468,10 +1483,12 @@ public class ManagementPage extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JComboBox<String> monthFrom;
     private javax.swing.JComboBox<String> monthTo;
+    private javax.swing.JLabel newInvCustomerAddres;
+    private javax.swing.JLabel newInvCustomerName;
+    private javax.swing.JLabel newInvCustomerPhone;
     private javax.swing.JPanel newSalePanel;
     private javax.swing.JPanel productPanel;
     private javax.swing.JPanel salesPanel;
