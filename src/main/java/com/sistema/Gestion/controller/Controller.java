@@ -12,6 +12,7 @@ import com.sistema.Gestion.service.SupplierService;
 import com.sistema.Gestion.service.UserService;
 import com.sistema.Gestion.view.LoginPage;
 import com.sistema.Gestion.view.LookFor;
+import com.sistema.Gestion.view.LookForProduct;
 import com.sistema.Gestion.view.ManagementPage;
 import com.sistema.Gestion.view.NewUserPage;
 import java.awt.event.ActionEvent;
@@ -63,12 +64,14 @@ public class Controller implements ActionListener{
     private LoginPage loginPage;
     private NewUserPage newUserPage;
     private LookFor lookFor;
+    private LookForProduct lookForProduct;
     
     private Integer idCustomer;
     private Integer idSupplier;
     private Integer idProduct;
     private Integer idBill;
     private Customer newCustomer;
+    private Product newProduct;
     
     
     
@@ -88,6 +91,29 @@ public class Controller implements ActionListener{
         this.newUserPage.getBtnExit().addActionListener(this);
         this.newUserPage.getBtnAddUser().addActionListener(this);
     }
+    
+    @Autowired
+    public void setLookForProduct(LookForProduct lookForProduct) {
+        this.lookForProduct = lookForProduct;
+        this.lookForProduct.getSelectProduct().addActionListener(this);
+        
+        this.lookForProduct.getProducts().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    
+                    newProduct = productService.getProductForId((int) target.getValueAt(row, 0));
+                    managementPage.setInvoiceIdProduct(newProduct.getIdProduct().toString());
+                }
+            }
+            
+        
+        });
+    }
+    
+    
     
     @Autowired
     public void setLookFor(LookFor lookFor) {
@@ -248,6 +274,7 @@ public class Controller implements ActionListener{
         this.managementPage.getInvoiceAddProduct().addActionListener(this);
         this.managementPage.getInvoiceAddCustomer().addActionListener(this);
         this.managementPage.getInvoiceClean().addActionListener(this);
+        this.managementPage.getInvoiceSearchProducr().addActionListener(this);
         
         
         
@@ -350,8 +377,7 @@ public class Controller implements ActionListener{
         
         // New Sale
         if (e.getSource() == managementPage.getInvoiceAddCustomer()) {
-            addInvoiceCustomer();
-            
+            addInvoiceCustomer(); 
         }
         
         if (e.getSource() == managementPage.getInvoiceSearchCustomer()) {
@@ -360,6 +386,14 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == managementPage.getInvoiceClean()) {
             cleanAllNewInvoice();
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceSearchProducr()) {
+            lookForProduct();
+        }
+        
+        if (e.getSource() == lookForProduct.getSelectProduct()) {
+            lookForProduct.dispose();
         }
          
         
@@ -854,6 +888,32 @@ public class Controller implements ActionListener{
         managementPage.setInvoiceIdCustomer("");
         managementPage.setInvoiceNameCustomer("");
         newCustomer = null;
+    }
+
+    private void lookForProduct() {
+        lookForProduct.setModal(true);
+        lookForProduct.setTitle("Buscar productos");
+        lookForProduct.setLocationRelativeTo(null);
+        fillLookForProductTable();
+        lookForProduct.setVisible(true);
+    }
+
+    private void fillLookForProductTable() {
+        List<Product> products = productService.getAllProducts();
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Descripción", "Precio", "Stock"};
+        model.setColumnIdentifiers(cabeceras);
+        lookForProduct.getProducts().setModel(model);
+        
+        products.forEach((product) -> {
+            Object[] productLine = {
+                product.getIdProduct(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock()
+            };
+            model.addRow(productLine);
+        });
     }
 
     

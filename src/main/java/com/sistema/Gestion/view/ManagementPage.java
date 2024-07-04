@@ -357,7 +357,7 @@ public class ManagementPage extends javax.swing.JDialog {
     }
 
     public JButton getInvoiceSearchProducr() {
-        return invoiceAddProduct;
+        return invoiceSearchProduct;
     }
 
     public JButton getInvoiceAddProduct() {
