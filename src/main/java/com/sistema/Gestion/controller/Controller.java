@@ -225,6 +225,7 @@ public class Controller implements ActionListener{
                 fillSupplierTable();
                 fillPruductTable();
                 fillBillTable();
+                fillProductTableHeaders();
                 managementPage.setIdCustomer("");
                 managementPage.setInvoiceIdCustomer("");
                 managementPage.setInvoiceNameCustomer("");
@@ -394,6 +395,10 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == lookForProduct.getSelectProduct()) {
             lookForProduct.dispose();
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceAddProduct()) {
+            addProductTo();
         }
          
         
@@ -887,7 +892,10 @@ public class Controller implements ActionListener{
         managementPage.setNewInvCustomerPhone("Teléfono");
         managementPage.setInvoiceIdCustomer("");
         managementPage.setInvoiceNameCustomer("");
+        managementPage.setInvoiceIdProduct("");
+        managementPage.setInvoiceAmountProduct();
         newCustomer = null;
+        newProduct = null;
     }
 
     private void lookForProduct() {
@@ -914,6 +922,40 @@ public class Controller implements ActionListener{
             };
             model.addRow(productLine);
         });
+    }
+    
+    private void fillProductTableHeaders() {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] cabeceras = {"ID", "Descripción", "Precio Unidad", "Cantidad", "Total"};
+        model.setColumnIdentifiers(cabeceras);
+        managementPage.getInvoiceDataProduct().setModel(model);
+    }
+    
+    
+
+    private void addProductTo() {
+        if (newProduct != null) {
+            int cantidad = Integer.parseInt(managementPage.getInvoiceAmountProduct());
+            Double total = cantidad * newProduct.getPrice();
+            if (cantidad > newProduct.getStock()) {
+                JOptionPane.showMessageDialog(managementPage, "No hay suficientes unidades en stock de este producto");
+            } else {
+                Object[] product = {newProduct.getIdProduct(), newProduct.getDescription(), newProduct.getPrice(), managementPage.getInvoiceAmountProduct(), total};
+                DefaultTableModel model = (DefaultTableModel) managementPage.getInvoiceDataProduct().getModel();
+                model.addRow(product);
+                // limpia los campos de producto
+                managementPage.setInvoiceAmountProduct();
+                managementPage.setInvoiceIdProduct("");
+                // calcula el nuevo stock y lo guarda en la base de datos
+                
+                // hay que guardar los cambios al confirmar la venta no en este punto
+                newProduct.setStock(newProduct.getStock() - cantidad);
+                productService.addModifyProduct(newProduct);
+            }
+            
+            
+        }
+        
     }
 
     

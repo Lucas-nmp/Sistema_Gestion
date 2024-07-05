@@ -395,6 +395,12 @@ public class ManagementPage extends javax.swing.JDialog {
     public String getInvoiceAmountProduct() {
         return invoiceAmountProduct.getValue().toString();
     }
+    
+    public void setInvoiceAmountProduct() {
+        invoiceAmountProduct.setValue(0);
+    }
+
+    
 
     public void setInvoiceIdCustomer(String invoiceIdCustomer) {
         this.invoiceIdCustomer.setText(invoiceIdCustomer);
