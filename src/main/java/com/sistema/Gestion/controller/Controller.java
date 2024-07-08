@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,8 @@ public class Controller implements ActionListener{
     private Integer idBill;
     private Customer newCustomer;
     private Product newProduct;
+    private List<Product> invoiceProducts;
+    private Integer position;
     
     
     
@@ -229,6 +232,7 @@ public class Controller implements ActionListener{
                 managementPage.setIdCustomer("");
                 managementPage.setInvoiceIdCustomer("");
                 managementPage.setInvoiceNameCustomer("");
+                invoiceProducts = new ArrayList<>();
             }
             
         });
@@ -275,7 +279,22 @@ public class Controller implements ActionListener{
         this.managementPage.getInvoiceAddProduct().addActionListener(this);
         this.managementPage.getInvoiceAddCustomer().addActionListener(this);
         this.managementPage.getInvoiceClean().addActionListener(this);
+        this.managementPage.getInvoiceCleanLine().addActionListener(this);
         this.managementPage.getInvoiceSearchProducr().addActionListener(this);
+        
+        this.managementPage.getInvoiceDataProduct().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable) e.getSource();
+                    position = target.getSelectedRow();
+
+                    
+                    
+                    
+                }
+            }
+        });
         
         
         
@@ -399,6 +418,10 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == managementPage.getInvoiceAddProduct()) {
             addProductTo();
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceCleanLine()) {
+            clanLine();
         }
          
         
@@ -896,6 +919,8 @@ public class Controller implements ActionListener{
         managementPage.setInvoiceAmountProduct();
         newCustomer = null;
         newProduct = null;
+        invoiceProducts.clear();
+        fillProductTableHeaders();
     }
 
     private void lookForProduct() {
@@ -932,6 +957,7 @@ public class Controller implements ActionListener{
     }
     
     
+    
 
     private void addProductTo() {
         if (newProduct != null) {
@@ -939,6 +965,8 @@ public class Controller implements ActionListener{
             Double total = cantidad * newProduct.getPrice();
             if (cantidad > newProduct.getStock()) {
                 JOptionPane.showMessageDialog(managementPage, "No hay suficientes unidades en stock de este producto");
+            } else if (cantidad == 0) {
+                JOptionPane.showMessageDialog(managementPage, "Las unidades no pueden ser 0");
             } else {
                 Object[] product = {newProduct.getIdProduct(), newProduct.getDescription(), newProduct.getPrice(), managementPage.getInvoiceAmountProduct(), total};
                 DefaultTableModel model = (DefaultTableModel) managementPage.getInvoiceDataProduct().getModel();
@@ -946,15 +974,34 @@ public class Controller implements ActionListener{
                 // limpia los campos de producto
                 managementPage.setInvoiceAmountProduct();
                 managementPage.setInvoiceIdProduct("");
-                // calcula el nuevo stock y lo guarda en la base de datos
                 
-                // hay que guardar los cambios al confirmar la venta no en este punto
+                // guardar los productos con el nuevo stock en una lista y modificarlos todos al pulsar en confirmar venta
+                // despues de confirmar la venta limpiar la lista 
+                
+                // Calculamos el nuevo Stock del producto y lo almacenamos en la lista
                 newProduct.setStock(newProduct.getStock() - cantidad);
-                productService.addModifyProduct(newProduct);
-            }
-            
-            
+                invoiceProducts.add(newProduct);
+                addInvoiceProduct(product);
+                //productService.addModifyProduct(newProduct);
+                
+                
+            }  
         }
+    }
+
+    private void clanLine() {
+        if (position != null) {
+            invoiceProducts.remove(position);
+            position = null;
+            
+            // ver los productos de la lista en la tabla, cambiar la forma de añadir a la tabla por un método y llamarlo cada vez
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "Seleccione un producto de la lista");
+        }
+        
+    }
+
+    private void addInvoiceProduct(Object product) {
         
     }
 
