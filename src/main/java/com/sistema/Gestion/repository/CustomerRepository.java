@@ -5,6 +5,7 @@
 package com.sistema.Gestion.repository;
 
 import com.sistema.Gestion.model.Customer;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Lucas
  */
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
+    
+    List<Customer> findByName(String name);
     
 }

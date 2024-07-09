@@ -414,7 +414,9 @@ public class ManagementPage extends javax.swing.JDialog {
         this.invoiceNameCustomer.setText(invoiceNameCustomer);
     }
     
-    
+    public String getInvoiceNameCustomer() {
+        return invoiceNameCustomer.getText();
+    }
     
     
     

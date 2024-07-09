@@ -74,6 +74,7 @@ public class Controller implements ActionListener{
     private Customer newCustomer;
     private Product newProduct;
     private List<Product> invoiceProducts;
+    private List<Object> invoiceObjects;
     private Integer position;
     
     
@@ -130,17 +131,8 @@ public class Controller implements ActionListener{
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     
-                    //idCustomer = (int) target.getValueAt(row, 0);
-                    //managementPage.setIdCustomer(String.valueOf(idCustomer));
-                    //managementPage.setIdCustomer(String.valueOf(target.getValueAt(row, 0)));
-                    
-                    // Serviría para llenar los datos en la nueva venta
-                    //managementPage.setInvoiceIdCustomer(String.valueOf(target.getValueAt(row, 0)));
-                    //managementPage.setInvoiceNameCustomer(String.valueOf(target.getValueAt(row, 1)));
                     newCustomer = customerService.getCustomerById((int) target.getValueAt(row, 0));
-                    managementPage.setIdCustomer(newCustomer.getIdCustomer().toString());
-                    managementPage.setInvoiceIdCustomer(newCustomer.getIdCustomer().toString());
-                    managementPage.setInvoiceNameCustomer(newCustomer.getName());
+                    
                     
                 }
             }
@@ -281,6 +273,7 @@ public class Controller implements ActionListener{
         this.managementPage.getInvoiceClean().addActionListener(this);
         this.managementPage.getInvoiceCleanLine().addActionListener(this);
         this.managementPage.getInvoiceSearchProducr().addActionListener(this);
+        this.managementPage.getInvoiceConfirm().addActionListener(this);
         
         this.managementPage.getInvoiceDataProduct().addMouseListener(new MouseAdapter() {
             @Override
@@ -392,7 +385,7 @@ public class Controller implements ActionListener{
         }
         
         if (e.getSource() == lookFor.getLookForSelect()) {
-            lookFor.dispose();
+            lookforSelectCustomer();
         }
         
         // New Sale
@@ -893,20 +886,43 @@ public class Controller implements ActionListener{
             };
             model.addRow(customerLine);
         });
-        
-   
     }
 
+    // busca por id o por nombre el cliente 
     private void addInvoiceCustomer() {
-        if (newCustomer != null) {
-            managementPage.setNewInvCustomerName(newCustomer.getName());
-            managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
-            managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
-            managementPage.setInvoiceIdCustomer("");
-            managementPage.setInvoiceNameCustomer("");
-        }
-        
-        
+        if (managementPage.getInvoiceNameCustomer().isEmpty()) {
+            try {
+                
+                int id = Integer.parseInt(managementPage.getInvoiceIdCustomer());
+                Customer customer = customerService.getCustomerById(id);
+                if (customer != null) {
+                    managementPage.setNewInvCustomerName(customer.getName());
+                    managementPage.setNewInvCustomerAddres(customer.getAddress());
+                    managementPage.setNewInvCustomerPhone(customer.getPhone());
+                    managementPage.setInvoiceIdCustomer("");
+                    managementPage.setInvoiceNameCustomer("");
+                } else {
+                    JOptionPane.showMessageDialog(managementPage, "El id introducido no corresponde con ningún cliente");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "El id tiene que ser un número");
+            }
+        }else {
+            String name = managementPage.getInvoiceNameCustomer();
+            List<Customer> customers = customerService.getCustomerByName(name);
+            if (customers.size() > 1) {
+                JOptionPane.showMessageDialog(managementPage, "Hay más de un cliente con el mismo nombre");
+            } else if (customers.size()== 1) {
+                Customer customer = customers.get(0);
+                managementPage.setNewInvCustomerName(customer.getName());
+                managementPage.setNewInvCustomerAddres(customer.getAddress());
+                managementPage.setNewInvCustomerPhone(customer.getPhone());
+                managementPage.setInvoiceIdCustomer("");
+                managementPage.setInvoiceNameCustomer("");
+            } else {
+                JOptionPane.showMessageDialog(managementPage, "No se encontró nungún cliente con ese nombre");
+            }
+        }    
     }
 
     private void cleanAllNewInvoice() {
@@ -975,16 +991,12 @@ public class Controller implements ActionListener{
                 managementPage.setInvoiceAmountProduct();
                 managementPage.setInvoiceIdProduct("");
                 
-                // guardar los productos con el nuevo stock en una lista y modificarlos todos al pulsar en confirmar venta
-                // despues de confirmar la venta limpiar la lista 
-                
+
                 // Calculamos el nuevo Stock del producto y lo almacenamos en la lista
                 newProduct.setStock(newProduct.getStock() - cantidad);
                 invoiceProducts.add(newProduct);
-                addInvoiceProduct(product);
+                
                 //productService.addModifyProduct(newProduct);
-                
-                
             }  
         }
     }
@@ -992,6 +1004,8 @@ public class Controller implements ActionListener{
     private void clanLine() {
         if (position != null) {
             invoiceProducts.remove(position);
+            DefaultTableModel model = (DefaultTableModel) managementPage.getInvoiceDataProduct().getModel();
+            model.removeRow(position);
             position = null;
             
             // ver los productos de la lista en la tabla, cambiar la forma de añadir a la tabla por un método y llamarlo cada vez
@@ -1001,9 +1015,15 @@ public class Controller implements ActionListener{
         
     }
 
-    private void addInvoiceProduct(Object product) {
-        
+    private void lookforSelectCustomer() {
+        managementPage.setNewInvCustomerName(newCustomer.getName());
+        managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
+        managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
+        newCustomer = null;
+        lookFor.dispose();
     }
+
+    
 
     
 

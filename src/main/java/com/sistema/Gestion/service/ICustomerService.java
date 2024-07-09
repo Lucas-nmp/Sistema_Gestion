@@ -17,4 +17,6 @@ public interface ICustomerService {
     
     public void deleteCustomer(Customer customer);
     
+    public List<Customer> getCustomerByName(String name);
+    
 }
