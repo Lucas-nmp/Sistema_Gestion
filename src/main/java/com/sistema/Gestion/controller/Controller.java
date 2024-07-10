@@ -74,7 +74,7 @@ public class Controller implements ActionListener{
     private Customer newCustomer;
     private Product newProduct;
     private List<Product> invoiceProducts;
-    private List<Object> invoiceObjects;
+    private List<Object[]> invoiceObjects;
     private Integer position;
     
     
@@ -225,6 +225,7 @@ public class Controller implements ActionListener{
                 managementPage.setInvoiceIdCustomer("");
                 managementPage.setInvoiceNameCustomer("");
                 invoiceProducts = new ArrayList<>();
+                invoiceObjects = new ArrayList<>();
             }
             
         });
@@ -415,6 +416,10 @@ public class Controller implements ActionListener{
         
         if (e.getSource() == managementPage.getInvoiceCleanLine()) {
             clanLine();
+        }
+        
+        if (e.getSource() == managementPage.getInvoiceConfirm()) {
+            confirmInvoice();
         }
          
         
@@ -990,7 +995,7 @@ public class Controller implements ActionListener{
                 // limpia los campos de producto
                 managementPage.setInvoiceAmountProduct();
                 managementPage.setInvoiceIdProduct("");
-                
+                invoiceObjects.add(product);
 
                 // Calculamos el nuevo Stock del producto y lo almacenamos en la lista
                 newProduct.setStock(newProduct.getStock() - cantidad);
@@ -1003,12 +1008,14 @@ public class Controller implements ActionListener{
 
     private void clanLine() {
         if (position != null) {
-            invoiceProducts.remove(position);
+            
             DefaultTableModel model = (DefaultTableModel) managementPage.getInvoiceDataProduct().getModel();
             model.removeRow(position);
+            invoiceObjects.remove((int) position);
+            invoiceProducts.remove((int) position);
+            JOptionPane.showMessageDialog(managementPage, invoiceProducts.get(position).getDescription());
             position = null;
             
-            // ver los productos de la lista en la tabla, cambiar la forma de añadir a la tabla por un método y llamarlo cada vez
         } else {
             JOptionPane.showMessageDialog(managementPage, "Seleccione un producto de la lista");
         }
@@ -1021,6 +1028,33 @@ public class Controller implements ActionListener{
         managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
         newCustomer = null;
         lookFor.dispose();
+    }
+
+    private void confirmInvoice() {
+        
+        // actualiza el stock de los productos en la lista
+        for (Product a :invoiceProducts) {
+            productService.addModifyProduct(a);
+        }
+        
+        
+        
+        /*
+        Imprimir las dos listas por pantalla
+        for (Object[] objArray : invoiceObjects) {
+            for (Object obj : objArray) {
+                System.out.print(obj + " ");
+            }
+            System.out.println();
+        }
+        
+        for (Product objArray : invoiceProducts) {
+            
+            System.out.print(objArray + " ");   
+        }
+        */
+        
+        
     }
 
     
