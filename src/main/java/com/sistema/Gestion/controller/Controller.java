@@ -1,5 +1,11 @@
 package com.sistema.Gestion.controller;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.UnitValue;
 import com.sistema.Gestion.model.Bill;
 import com.sistema.Gestion.model.Customer;
 import com.sistema.Gestion.model.Product;
@@ -19,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -108,7 +115,7 @@ public class Controller implements ActionListener{
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     
-                    newProduct = productService.getProductForId((int) target.getValueAt(row, 0));
+                    newProduct = productService.getProductById((int) target.getValueAt(row, 0));
                     managementPage.setInvoiceIdProduct(newProduct.getIdProduct().toString());
                 }
             }
@@ -560,7 +567,7 @@ public class Controller implements ActionListener{
         listBill.forEach((bill) -> {
             Object[] billLine = {
                 bill.getIdBill(),
-                bill.getIdCustomer(),
+                bill.getIdCustomer().getIdCustomer(),
                 bill.getDateBill(),
                 bill.getAmount()
             };
@@ -941,6 +948,7 @@ public class Controller implements ActionListener{
         newCustomer = null;
         newProduct = null;
         invoiceProducts.clear();
+        invoiceObjects.clear();
         fillProductTableHeaders();
     }
 
@@ -1026,16 +1034,63 @@ public class Controller implements ActionListener{
         managementPage.setNewInvCustomerName(newCustomer.getName());
         managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
         managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
-        newCustomer = null;
+        
         lookFor.dispose();
+        
     }
 
     private void confirmInvoice() {
-        
-        // actualiza el stock de los productos en la lista
-        for (Product a :invoiceProducts) {
-            productService.addModifyProduct(a);
+        // Actualiza el stock de los productos en la lista
+        for (Product p : invoiceProducts) {
+            productService.addModifyProduct(p);
         }
+
+        LocalDate date = LocalDate.now();
+        Double amount = calculateTotalPrice();
+
+        JOptionPane.showMessageDialog(managementPage, amount);
+
+        // Recupera los productos desde la base de datos para asegurarte de que estén gestionados
+        /*
+        List<Product> managedProducts = new ArrayList<>();
+        for (Product product : invoiceProducts) {
+            managedProducts.add(productService.getProductById(product.getIdProduct()));
+        }*/
+
+        if (newCustomer != null) {
+            Bill bill = new Bill(null, newCustomer, invoiceProducts, date, amount);
+            billService.addModifyBill(bill);
+
+
+            cleanAllNewInvoice();
+        } else {
+            JOptionPane.showMessageDialog(managementPage, "el cliente es null");
+        }
+        
+        
+        
+        // crear un nuevo objeto factura/bill (cambiar por invoice) y añadirlo a la base de datos
+        // crear la factura en un método aparte cogiendo los datos del objeto factura anterior
+        // después en la vista de facturas poder generar nuevas facturas 
+        
+        
+        /*
+        try {
+            PdfWriter writer = new PdfWriter(new FileOutputStream("documento.pdf"));
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+            
+            document.add(new Paragraph("Factura").setBold().setFontSize(25));
+            
+
+            
+            document.close();
+            
+            
+            
+        } catch (Exception e) {
+        }
+        */
         
         
         
@@ -1055,6 +1110,15 @@ public class Controller implements ActionListener{
         */
         
         
+    }
+
+    private Double calculateTotalPrice() {
+        double totalPrice = 0.0;
+        for (Object[] product : invoiceObjects) {
+            double productTotal = (double) product[4]; 
+            totalPrice += productTotal;
+        }
+        return totalPrice;
     }
 
     

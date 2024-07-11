@@ -22,7 +22,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Product getProductForId(Integer idProduct) {
+    public Product getProductById(Integer idProduct) {
         Product product = productRepository.findById(idProduct).orElse(null);
         return product;
     }
