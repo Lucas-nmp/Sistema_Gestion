@@ -1,10 +1,19 @@
 package com.sistema.Gestion.controller;
 
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.sistema.Gestion.model.Bill;
 import com.sistema.Gestion.model.Customer;
@@ -83,6 +92,8 @@ public class Controller implements ActionListener{
     private List<Product> invoiceProducts;
     private List<Object[]> invoiceObjects;
     private Integer position;
+    
+    private static String[] datosEmpresa = {"Reparaciones", "C/ Las Mesas, 17", "B14334455", "666555666", "reparaciones@reparaciones.com"};
     
     
     
@@ -911,6 +922,7 @@ public class Controller implements ActionListener{
                     managementPage.setNewInvCustomerName(customer.getName());
                     managementPage.setNewInvCustomerAddres(customer.getAddress());
                     managementPage.setNewInvCustomerPhone(customer.getPhone());
+                    newCustomer = customer;
                     managementPage.setInvoiceIdCustomer("");
                     managementPage.setInvoiceNameCustomer("");
                 } else {
@@ -929,6 +941,7 @@ public class Controller implements ActionListener{
                 managementPage.setNewInvCustomerName(customer.getName());
                 managementPage.setNewInvCustomerAddres(customer.getAddress());
                 managementPage.setNewInvCustomerPhone(customer.getPhone());
+                newCustomer = customer;
                 managementPage.setInvoiceIdCustomer("");
                 managementPage.setInvoiceNameCustomer("");
             } else {
@@ -1031,11 +1044,17 @@ public class Controller implements ActionListener{
     }
 
     private void lookforSelectCustomer() {
-        managementPage.setNewInvCustomerName(newCustomer.getName());
-        managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
-        managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
+        if (newCustomer != null) {
+            managementPage.setNewInvCustomerName(newCustomer.getName());
+            managementPage.setNewInvCustomerAddres(newCustomer.getAddress());
+            managementPage.setNewInvCustomerPhone(newCustomer.getPhone());
+            managementPage.setIdCustomer(newCustomer.getIdCustomer().toString());
+
+            lookFor.dispose();
+        } else {
+            JOptionPane.showMessageDialog(lookFor, "Seleccione un cliente");
+        }
         
-        lookFor.dispose();
         
     }
 
@@ -1050,17 +1069,11 @@ public class Controller implements ActionListener{
 
         JOptionPane.showMessageDialog(managementPage, amount);
 
-        // Recupera los productos desde la base de datos para asegurarte de que estén gestionados
-        /*
-        List<Product> managedProducts = new ArrayList<>();
-        for (Product product : invoiceProducts) {
-            managedProducts.add(productService.getProductById(product.getIdProduct()));
-        }*/
 
         if (newCustomer != null) {
             Bill bill = new Bill(null, newCustomer, invoiceProducts, date, amount);
             billService.addModifyBill(bill);
-
+            generatePdf(bill);
 
             cleanAllNewInvoice();
         } else {
@@ -1072,25 +1085,6 @@ public class Controller implements ActionListener{
         // crear un nuevo objeto factura/bill (cambiar por invoice) y añadirlo a la base de datos
         // crear la factura en un método aparte cogiendo los datos del objeto factura anterior
         // después en la vista de facturas poder generar nuevas facturas 
-        
-        
-        /*
-        try {
-            PdfWriter writer = new PdfWriter(new FileOutputStream("documento.pdf"));
-            PdfDocument pdfDoc = new PdfDocument(writer);
-            Document document = new Document(pdfDoc);
-            
-            document.add(new Paragraph("Factura").setBold().setFontSize(25));
-            
-
-            
-            document.close();
-            
-            
-            
-        } catch (Exception e) {
-        }
-        */
         
         
         
@@ -1119,6 +1113,96 @@ public class Controller implements ActionListener{
             totalPrice += productTotal;
         }
         return totalPrice;
+    }
+
+    private void generatePdf(Bill bill) {
+        
+        try {
+            PdfWriter writer = new PdfWriter(new FileOutputStream("documento.pdf"));
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+            
+            // Título y datos de la empresa
+            Color blue = new DeviceRgb(173, 216, 230);
+            PdfFont boldFont = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+
+            Paragraph title = new Paragraph("Factura Nº: " + bill.getIdBill() + " - " + bill.getDateBill())
+                    .setFont(boldFont)
+                    .setFontSize(25)
+                    .setFontColor(blue)
+                    .setTextAlignment(TextAlignment.RIGHT);
+
+            Paragraph companyDetails = new Paragraph()
+                    .add(datosEmpresa[0] + "\n")
+                    .add(datosEmpresa[1] + "\n")
+                    .add("CIF: " + datosEmpresa[2] + "\n")
+                    .add("Teléfono: " + datosEmpresa[3] + "\n")
+                    .add("Email: " + datosEmpresa[4] + "\n")
+                    .setTextAlignment(TextAlignment.RIGHT);
+
+            document.add(title);
+            document.add(companyDetails);
+
+            // Línea de separación
+            document.add(new Paragraph("\n"));
+            
+
+            // Datos del cliente
+            Paragraph clientDetails = new Paragraph()
+                    .add("Cliente: " + bill.getIdCustomer().getName() + "\n")
+                    .add("Dirección: " + bill.getIdCustomer().getAddress() + "\n")
+                    .add("Teléfono: " + bill.getIdCustomer().getPhone() + "\n")
+                    .setTextAlignment(TextAlignment.LEFT);
+
+            document.add(clientDetails);
+
+            // Línea de separación
+            document.add(new Paragraph("\n"));
+            
+
+            // Tabla de productos
+            float[] columnWidths = {4, 2, 2, 2}; // Ancho de las columnas
+            Table table = new Table(UnitValue.createPercentArray(columnWidths));
+            table.setWidth(UnitValue.createPercentValue(100));
+            table.addHeaderCell(new Cell().add(new Paragraph("Descripción").setBold()));
+            table.addHeaderCell(new Cell().add(new Paragraph("Precio Unidad").setBold()));
+            table.addHeaderCell(new Cell().add(new Paragraph("Cantidad").setBold()));
+            table.addHeaderCell(new Cell().add(new Paragraph("Precio Total").setBold()));
+
+            double total = 0;
+
+            for (Product product : bill.getProducts()) {
+                table.addCell(new Paragraph(product.getDescription()));
+                table.addCell(new Paragraph(String.valueOf(product.getPrice())));
+                table.addCell(new Paragraph(String.valueOf(product.getStock())));
+                double productTotal = product.getPrice() * product.getStock();
+                table.addCell(new Paragraph(String.valueOf(productTotal)));
+                total += productTotal;
+            }
+
+            document.add(table);
+
+            // Calcular IVA y total final
+            double iva = total * 0.21;
+            double totalWithIva = total + iva;
+
+            // Mostrar IVA y total
+            Paragraph ivaParagraph = new Paragraph("IVA (21%): " + iva)
+                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setBold();
+
+            Paragraph totalParagraph = new Paragraph("Total: " + totalWithIva)
+                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setBold();
+
+            document.add(new Paragraph("\n"));
+            document.add(ivaParagraph);
+            document.add(totalParagraph);
+
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     
