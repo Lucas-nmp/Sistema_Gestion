@@ -37,13 +37,6 @@ public class Bill {
     @JoinColumn(name = "idCustomer")
     private Customer idCustomer;
 
-    @ManyToMany
-    @JoinTable(
-        name = "bill_product",
-        joinColumns = @JoinColumn(name = "bill_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
 
     private LocalDate dateBill;
     private Double amount;

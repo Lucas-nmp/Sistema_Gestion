@@ -1071,10 +1071,18 @@ public class Controller implements ActionListener{
 
 
         if (newCustomer != null) {
-            Bill bill = new Bill(null, newCustomer, invoiceProducts, date, amount);
+            //Bill bill = new Bill(null, newCustomer, invoiceProducts, date, amount);
+            //billService.addModifyBill(bill);
+            //generatePdf(bill);
+            Bill bill = new Bill(null, newCustomer, date, amount);
             billService.addModifyBill(bill);
             generatePdf(bill);
-
+            
+            
+            // invoiceObjects tiene la cantidad de cada producto y el id del producto, podemos añadir estos datos a una nueva tabla
+            // que se añade a la vez que la bill por tanto tiene el mismo id entonces para luego imprimir recuperamos la cantidad y el id del producto
+            
+            
             cleanAllNewInvoice();
         } else {
             JOptionPane.showMessageDialog(managementPage, "el cliente es null");
@@ -1089,14 +1097,14 @@ public class Controller implements ActionListener{
         
         
         /*
-        Imprimir las dos listas por pantalla
+        //Imprimir las dos listas por pantalla
         for (Object[] objArray : invoiceObjects) {
             for (Object obj : objArray) {
                 System.out.print(obj + " ");
             }
             System.out.println();
         }
-        
+        /*
         for (Product objArray : invoiceProducts) {
             
             System.out.print(objArray + " ");   
@@ -1171,6 +1179,7 @@ public class Controller implements ActionListener{
 
             double total = 0;
 
+            /*
             for (Product product : bill.getProducts()) {
                 table.addCell(new Paragraph(product.getDescription()));
                 table.addCell(new Paragraph(String.valueOf(product.getPrice())));
@@ -1178,7 +1187,7 @@ public class Controller implements ActionListener{
                 double productTotal = product.getPrice() * product.getStock();
                 table.addCell(new Paragraph(String.valueOf(productTotal)));
                 total += productTotal;
-            }
+            }*/
 
             document.add(table);
 
