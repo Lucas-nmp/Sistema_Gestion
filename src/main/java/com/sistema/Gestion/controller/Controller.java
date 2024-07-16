@@ -16,10 +16,12 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.sistema.Gestion.model.Bill;
+import com.sistema.Gestion.model.BillProducts;
 import com.sistema.Gestion.model.Customer;
 import com.sistema.Gestion.model.Product;
 import com.sistema.Gestion.model.Supplier;
 import com.sistema.Gestion.model.User;
+import com.sistema.Gestion.service.BillProductService;
 import com.sistema.Gestion.service.BillService;
 import com.sistema.Gestion.service.CustomerService;
 import com.sistema.Gestion.service.ProductService;
@@ -35,6 +37,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -75,6 +78,9 @@ public class Controller implements ActionListener{
     
     @Autowired
     private BillService billService;
+    
+    @Autowired
+    private BillProductService billProductService;
     
 
     private ManagementPage managementPage;
@@ -1022,7 +1028,7 @@ public class Controller implements ActionListener{
                 newProduct.setStock(newProduct.getStock() - cantidad);
                 invoiceProducts.add(newProduct);
                 
-                //productService.addModifyProduct(newProduct);
+                
             }  
         }
     }
@@ -1034,7 +1040,7 @@ public class Controller implements ActionListener{
             model.removeRow(position);
             invoiceObjects.remove((int) position);
             invoiceProducts.remove((int) position);
-            JOptionPane.showMessageDialog(managementPage, invoiceProducts.get(position).getDescription());
+            
             position = null;
             
         } else {
@@ -1076,43 +1082,27 @@ public class Controller implements ActionListener{
             //generatePdf(bill);
             Bill bill = new Bill(null, newCustomer, date, amount);
             billService.addModifyBill(bill);
+            
+            // Intento Crear lista objetos
+            List<BillProducts> productsList = new ArrayList<>();
+            for (Object[] p : invoiceObjects) {
+                       
+                Integer idP = Integer.valueOf(p[0].toString()); // algo de esto está dando erro al convertir a integer comprobar los valores 
+                Integer amountProduct = Integer.valueOf(p[3].toString());
+                BillProducts billP = new BillProducts(null, bill.getIdBill(), idP, amountProduct);
+                productsList.add(billP);
+            }
+            
+            productsList.forEach(billProductService::addBillProduct);
+            
             generatePdf(bill);
-            
-            
-            // invoiceObjects tiene la cantidad de cada producto y el id del producto, podemos añadir estos datos a una nueva tabla
-            // que se añade a la vez que la bill por tanto tiene el mismo id entonces para luego imprimir recuperamos la cantidad y el id del producto
-            
-            
+  
             cleanAllNewInvoice();
         } else {
             JOptionPane.showMessageDialog(managementPage, "el cliente es null");
-        }
-        
-        
-        
-        // crear un nuevo objeto factura/bill (cambiar por invoice) y añadirlo a la base de datos
-        // crear la factura en un método aparte cogiendo los datos del objeto factura anterior
-        // después en la vista de facturas poder generar nuevas facturas 
-        
-        
-        
-        /*
-        //Imprimir las dos listas por pantalla
-        for (Object[] objArray : invoiceObjects) {
-            for (Object obj : objArray) {
-                System.out.print(obj + " ");
-            }
-            System.out.println();
-        }
-        /*
-        for (Product objArray : invoiceProducts) {
-            
-            System.out.print(objArray + " ");   
-        }
-        */
-        
-        
+        } 
     }
+    
 
     private Double calculateTotalPrice() {
         double totalPrice = 0.0;
@@ -1126,7 +1116,7 @@ public class Controller implements ActionListener{
     private void generatePdf(Bill bill) {
         
         try {
-            PdfWriter writer = new PdfWriter(new FileOutputStream("documento.pdf"));
+            PdfWriter writer = new PdfWriter(new FileOutputStream(bill.getIdBill() + "-" + bill.getDateBill().getYear() +".pdf"));
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
             
@@ -1151,7 +1141,7 @@ public class Controller implements ActionListener{
             document.add(title);
             document.add(companyDetails);
 
-            // Línea de separación
+            
             document.add(new Paragraph("\n"));
             
 
@@ -1164,7 +1154,7 @@ public class Controller implements ActionListener{
 
             document.add(clientDetails);
 
-            // Línea de separación
+            
             document.add(new Paragraph("\n"));
             
 
@@ -1179,15 +1169,14 @@ public class Controller implements ActionListener{
 
             double total = 0;
 
-            /*
-            for (Product product : bill.getProducts()) {
-                table.addCell(new Paragraph(product.getDescription()));
-                table.addCell(new Paragraph(String.valueOf(product.getPrice())));
-                table.addCell(new Paragraph(String.valueOf(product.getStock())));
-                double productTotal = product.getPrice() * product.getStock();
-                table.addCell(new Paragraph(String.valueOf(productTotal)));
+            for (Object[] product : invoiceObjects) {
+                table.addCell(new Paragraph("ID: " + product[0].toString() + ", " + product[1].toString()));
+                table.addCell(new Paragraph(product[2].toString()));
+                table.addCell(new Paragraph(product[3].toString()));
+                table.addCell(new Paragraph(product[4].toString()));
+                Double productTotal = Double.valueOf(product[4].toString());
                 total += productTotal;
-            }*/
+            }
 
             document.add(table);
 
@@ -1209,8 +1198,7 @@ public class Controller implements ActionListener{
             document.add(totalParagraph);
 
             document.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | NumberFormatException e) {
         }
     }
 
