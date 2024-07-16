@@ -3,6 +3,7 @@ package com.sistema.Gestion.view;
 import com.sistema.Gestion.controller.Controller;
 import com.sistema.Gestion.service.UserService;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,12 +33,18 @@ public class LoginPage extends javax.swing.JFrame {
         return btnNewUser;
     }
     
+   @Override
     public String getName() {
         return edtNombre.getText();
     }
     
     public String getPass() {
         return edtPass.getText();
+    }
+    
+    public JTextField getEdtPass() {
+        return edtPass;
+                
     }
     
 

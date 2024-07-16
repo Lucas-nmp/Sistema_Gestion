@@ -109,7 +109,22 @@ public class Controller implements ActionListener{
         
         this.loginPage.getBtnExit().addActionListener(this);
         this.loginPage.getBtnLogin().addActionListener(this);
-        this.loginPage.getBtnNewUser().addActionListener(this);   
+        this.loginPage.getBtnNewUser().addActionListener(this); 
+        
+        this.loginPage.getEdtPass().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = loginPage.getName();
+                String pass = loginPage.getPass();
+                if (name.isEmpty() && pass.isEmpty()) {
+                    JOptionPane.showMessageDialog(loginPage, "Introduzca el nombre de usuario y la contraseña");
+                } else {
+                    AccessControl(name, pass);
+                }
+                
+            }
+            
+        });
     }
     
     @Autowired
