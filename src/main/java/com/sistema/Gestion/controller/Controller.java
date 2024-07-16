@@ -8,9 +8,7 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
@@ -41,7 +39,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -320,15 +317,18 @@ public class Controller implements ActionListener{
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
                     JTable target = (JTable) e.getSource();
-                    position = target.getSelectedRow();
-
-                    
-                    
-                    
+                    position = target.getSelectedRow();  
                 }
             }
         });
         
+        this.managementPage.getInvoiceId().addActionListener((ActionEvent e) -> {
+            addInvoiceCustomer();
+        });
+        
+        this.managementPage.getInvoiceName().addActionListener((ActionEvent e) -> {
+            addInvoiceCustomer();
+        });
         
         
         
@@ -1081,41 +1081,42 @@ public class Controller implements ActionListener{
 
     private void confirmInvoice() {
         // Actualiza el stock de los productos en la lista
-        for (Product p : invoiceProducts) {
-            productService.addModifyProduct(p);
-        }
-
-        LocalDate date = LocalDate.now();
-        Double amount = calculateTotalPrice();
-
-        JOptionPane.showMessageDialog(managementPage, amount);
-
-
-        if (newCustomer != null) {
-            //Bill bill = new Bill(null, newCustomer, invoiceProducts, date, amount);
-            //billService.addModifyBill(bill);
-            //generatePdf(bill);
-            Bill bill = new Bill(null, newCustomer, date, amount);
-            billService.addModifyBill(bill);
-            
-            // Intento Crear lista objetos
-            List<BillProducts> productsList = new ArrayList<>();
-            for (Object[] p : invoiceObjects) {
-                       
-                Integer idP = Integer.valueOf(p[0].toString()); // algo de esto está dando erro al convertir a integer comprobar los valores 
-                Integer amountProduct = Integer.valueOf(p[3].toString());
-                BillProducts billP = new BillProducts(null, bill.getIdBill(), idP, amountProduct);
-                productsList.add(billP);
-            }
-            
-            productsList.forEach(billProductService::addBillProduct);
-            
-            generatePdf(bill);
-  
-            cleanAllNewInvoice();
+        if (invoiceProducts.isEmpty()) {
+            JOptionPane.showMessageDialog(managementPage, "No hay productos en la cesta");
         } else {
-            JOptionPane.showMessageDialog(managementPage, "el cliente es null");
-        } 
+            for (Product p : invoiceProducts) {
+                productService.addModifyProduct(p);
+            }
+        
+        
+
+            LocalDate date = LocalDate.now();
+            Double amount = calculateTotalPrice();
+
+            if (newCustomer != null) {
+
+                Bill bill = new Bill(null, newCustomer, date, amount);
+                billService.addModifyBill(bill);
+
+
+                List<BillProducts> productsList = new ArrayList<>();
+                for (Object[] p : invoiceObjects) {
+
+                    Integer idP = Integer.valueOf(p[0].toString()); 
+                    Integer amountProduct = Integer.valueOf(p[3].toString());
+                    BillProducts billP = new BillProducts(null, bill.getIdBill(), idP, amountProduct);
+                    productsList.add(billP);
+                }
+
+                productsList.forEach(billProductService::addBillProduct);
+
+                generatePdf(bill);
+                JOptionPane.showMessageDialog(managementPage, "Factura generada correctamente con número " + bill.getIdBill() + "-" + bill.getDateBill().getYear());
+                cleanAllNewInvoice();
+            } else {
+                JOptionPane.showMessageDialog(managementPage, "Tiene que seleccionar un cliente");
+            } 
+        }    
     }
     
 

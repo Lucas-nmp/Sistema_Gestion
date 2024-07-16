@@ -387,6 +387,14 @@ public class ManagementPage extends javax.swing.JDialog {
     public String getInvoiceIdCustomer() {
         return invoiceIdCustomer.getText();
     }
+    
+    public JTextField getInvoiceId() {
+        return invoiceIdCustomer;
+    }
+    
+    public JTextField getInvoiceName() {
+        return invoiceNameCustomer;
+    }
 
     public String getInvoiceIdProduct() {
         return invoiceIdProduct.getText();
