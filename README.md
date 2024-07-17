@@ -1,5 +1,5 @@
 <h1 align="center"> Sistema de Gestión </h1>
-<p>Tecnologías Utilizadas </p>
+<p><strong>Tecnologías Utilizadas</strong> </p>
 <ul>
     <li><strong>Java</strong>: Lenguaje de programación principal.</li>
     <li><strong>Spring Boot</strong>: Framework para el desarrollo del backend, incluyendo:
@@ -14,7 +14,7 @@
 </ul>
 
 
-<p>Opciónes disponibles </p>
+<p><strong>Opciónes disponibles</strong> </p>
 <ul>
     <li><strong>Gestión de Clientes</strong>: Añadir, modificar y eliminar clientes.</li>
     <li><strong>Gestión de Productos</strong>: Añadir, modificar y eliminar productos.</li>
