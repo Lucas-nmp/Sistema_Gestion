@@ -1,6 +1,8 @@
 package com.sistema.Gestion.repository;
 
 import com.sistema.Gestion.model.Bill;
+import com.sistema.Gestion.model.Customer;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,13 +21,13 @@ public interface BillRepository extends JpaRepository<Bill, Integer>{
     List<Bill> findBills();
     
     @Query("SELECT b FROM Bill b WHERE b.idCustomer = :idCustomer AND b.dateBill BETWEEN :startDate AND :endDate")
-    List<Bill> findBillsByCustomerAndDateRange(@Param("idCustomer") Integer idCustomer, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    List<Bill> findBillsByCustomerAndDateRange(@Param("idCustomer") Customer customer, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     @Query("SELECT b FROM Bill b WHERE b.idCustomer = :idCustomer")
-    List<Bill> findByIdCustomer(@Param("idCustomer") Integer idCustomer);
+    List<Bill> findByCustomer(@Param("idCustomer") Customer Customer);
     
     @Query("SELECT b FROM Bill b WHERE b.dateBill BETWEEN :startDate AND :endDate")
-    List<Bill> findByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    List<Bill> findByDate(@Param("startDate") LocalDate  startDate, @Param("endDate") LocalDate  endDate);
     
     /*
     @Query("SELECT b FROM Bill b WHERE b.id_customer = :idCustomer AND b.date_bill BETWEEN :startDate AND :endDate")

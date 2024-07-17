@@ -5,7 +5,9 @@
 package com.sistema.Gestion.service;
 
 import com.sistema.Gestion.model.Bill;
+import com.sistema.Gestion.model.Customer;
 import com.sistema.Gestion.repository.BillRepository;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,15 +45,15 @@ public class BillService implements IBillService{
         billRepository.delete(bill);
     }
     
-    public List<Bill> findBillsByCustomerAndDateRange(Integer idCustomer, Date startDate, Date endDate) {
-        return billRepository.findBillsByCustomerAndDateRange(idCustomer, startDate, endDate);
+    public List<Bill> findBillsByCustomerAndDateRange(Customer customer, LocalDate startDate, LocalDate endDate) {
+        return billRepository.findBillsByCustomerAndDateRange(customer, startDate, endDate);
     }
     
-    public List<Bill> findByIdCustomer(Integer idCustomer) {
-        return billRepository.findByIdCustomer(idCustomer);
+    public List<Bill> findByCustomer(Customer customer) {
+        return billRepository.findByCustomer(customer);
     }
     
-    public List<Bill> findByDate(Date startDate, Date endDate) {
+    public List<Bill> findByDate(LocalDate startDate, LocalDate endDate) {
         return billRepository.findByDate(startDate, endDate);
     }
     

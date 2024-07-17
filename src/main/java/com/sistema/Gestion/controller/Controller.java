@@ -797,112 +797,80 @@ public class Controller implements ActionListener{
         String idBillS = managementPage.getIdBill();
         String idCustomerS = managementPage.getIdCustomer();
         
-        
-        
-        if(!idBillS.isEmpty() && idCustomerS.isEmpty()) {
-            
+        if (!idBillS.isEmpty()) {
             try {
                 Integer idB = Integer.valueOf(idBillS);
                 Bill billById = billService.getBillById(idB);
-                Object[] billLine = {billById.getIdBill(), billById.getIdCustomer(), billById.getDateBill(), billById.getAmount()};
+                Object[] billLine = {billById.getIdBill(), billById.getIdCustomer().getIdCustomer(), billById.getDateBill(), billById.getAmount()};
                 model.addRow(billLine);
-                
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(managementPage, "El id de factura es un número");
             }
-          
-        
-        } else if (idCustomerS.isEmpty() && idBillS.isEmpty()) {
-            String dayFrom = managementPage.getDayFrom();
-            String dayTo = managementPage.getDayTo();
-            String monthFrom = managementPage.getMonthFrom();
-            String monthTo = managementPage.getMonthTo();
-            String yearFrom = managementPage.getYearFrom();
-            String yearTo = managementPage.getYearTo();
             
-            try {
-                LocalDate localDateFrom = LocalDate.of(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
-                Date dateFrom = Date.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                LocalDate localDateTo = LocalDate.of(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
-                Date dateTo = Date.from(localDateTo.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                // Llamada al método del repositorio
-                List<Bill> bills = billService.findByDate(dateFrom, dateTo);
-                
-                
-                bills.forEach((bill) -> {
-                    Object[] billLine = {
-                        bill.getIdBill(),
-                        bill.getIdCustomer(),
-                        bill.getDateBill(),
-                        bill.getAmount()
-                    };
-                    model.addRow(billLine);
-                });
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(managementPage, "El id de cliente es un número");
-            }
-        
-        } else if (!idCustomerS.isEmpty() && idBillS.isEmpty()) {
-            String dayFrom = managementPage.getDayFrom();
-            String dayTo = managementPage.getDayTo();
-            String monthFrom = managementPage.getMonthFrom();
-            String monthTo = managementPage.getMonthTo();
-            String yearFrom = managementPage.getYearFrom();
-            String yearTo = managementPage.getYearTo();
+        } else if (!idCustomerS.isEmpty()) {
+            LocalDate localDateFrom = getLocalDateFrom();
+            LocalDate localDateTo = getLocalDateTo();
             
             try {
                 
-                LocalDate localDateFrom = LocalDate.of(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
-                Date dateFrom = Date.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                LocalDate localDateTo = LocalDate.of(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
-                Date dateTo = Date.from(localDateTo.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                // Llamada al método del repositorio
-                List<Bill> bills = billService.findBillsByCustomerAndDateRange(Integer.valueOf(idCustomerS), dateFrom, dateTo);
+                Integer idCus = Integer.valueOf(idCustomerS);
+                Customer customer = customerService.getCustomerById(idCus);
+                
+                List<Bill> bills = billService.findBillsByCustomerAndDateRange(customer, localDateFrom, localDateTo);
+                fillTableBills(bills, model);
                 
                 
-                bills.forEach((bill) -> {
-                    Object[] billLine = {
-                        bill.getIdBill(),
-                        bill.getIdCustomer(),
-                        bill.getDateBill(),
-                        bill.getAmount()
-                    };
-                    model.addRow(billLine);
-                });
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(managementPage, "El id de cliente es un número");
+                JOptionPane.showMessageDialog(managementPage, "El id del cliente tiene que ser un número");
             }
             
+        } else if (idBillS.isEmpty() && idCustomerS.isEmpty()) {
+            LocalDate localDateFrom = getLocalDateFrom();
+            LocalDate localDateTo = getLocalDateTo();
+            try {
+
+                List<Bill> bills = billService.findByDate(localDateFrom, localDateTo);
+                fillTableBills(bills, model);
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(managementPage, "La fecha es incorrecta");
+            }
         } else {
-            JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
-        }    
-        /*    
-        } else if (!idCustomerS.isEmpty() && idBillS.isEmpty()) {
-            try {
-                Integer id = Integer.valueOf(idCustomerS);
-                List<Bill> listBill = billService.findByIdCustomer(id);
-
-                listBill.forEach((bill) -> {
-                    Object[] billLine = {
-                        bill.getIdBill(),
-                        bill.getIdCustomer(),
-                        bill.getDateBill(),
-                        bill.getAmount()
-                    };
-                    model.addRow(billLine);
-                });
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(managementPage, "El id tiene que ser un número");
-            }
-            
-        } else {
-            JOptionPane.showMessageDialog(managementPage, "Tiene que buscar por id de factura o de cliente");
+            JOptionPane.showMessageDialog(managementPage, "Revise los parámetros de busqueda");
         }
-        */   
+           
+    }
+    
+    private LocalDate getLocalDateFrom () {
+        String dayFrom = managementPage.getDayFrom();
+        String monthFrom = managementPage.getMonthFrom();
+        String yearFrom = managementPage.getYearFrom();
+        
+        LocalDate localDateFrom = LocalDate.of(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
+        
+        return localDateFrom;
+    }
+    
+    private LocalDate getLocalDateTo () {
+        String dayTo = managementPage.getDayTo();
+        String monthTo = managementPage.getMonthTo();
+        String yearTo = managementPage.getYearTo();
+        
+        LocalDate localDateTo = LocalDate.of(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
+        
+        return localDateTo;
+    }
+    
+    private void fillTableBills(List<Bill> bills, DefaultTableModel model ) {
+        bills.forEach((bill) -> {
+                    Object[] billLine = {
+                        bill.getIdBill(),
+                        bill.getIdCustomer().getIdCustomer(),
+                        bill.getDateBill(),
+                        bill.getAmount()
+                    };
+                    model.addRow(billLine);
+                });
     }
 
     private void lookForCustomer() {
